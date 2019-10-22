@@ -1,6 +1,7 @@
 # notebook files
 .ipynb_checkpoints/*
 .ipynb_checkpoints
+.sass-cache
 
 # History files
 .Rhistory
