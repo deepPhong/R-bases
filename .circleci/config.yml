@@ -43,7 +43,7 @@ jobs:
       # Add deployment key fingerprint for CircleCI to use for a push
       - add_ssh_keys:
           fingerprints:
-            - a7:74:de:d4:5f:d2:77:e0:1b:e5:8f:ec:63:b2:48:c5
+            - 25:54:5b:90:89:4f:f7:11:38:80:5d:c8:66:7e:e9:32
 
       - prepare_jekyll_installation
       - run:
