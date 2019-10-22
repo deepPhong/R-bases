@@ -1,0 +1,1695 @@
+---
+redirect_from:
+  - "/04-data-frames"
+interact_link: content/04_data-frames.ipynb
+kernel_name: ir
+has_widgets: false
+title: |-
+  Manipulations et transformation de Data Frames
+prev_page:
+  url: /03_vectors.html
+  title: |-
+    Manipulations et opérations de vecteurs
+next_page:
+  url: 
+  title: |-
+    
+suffix: .ipynb
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Chapitre-4-:-Manipulation-et-transformation-de-Data-Frames"><strong>Chapitre 4 : Manipulation et transformation de Data Frames</strong><a class="anchor-link" href="#Chapitre-4-:-Manipulation-et-transformation-de-Data-Frames"> </a></h1><p>Entrons maintenant dans le vif du sujet, à savoir la manipulation de données tabulaires. C'est le format le plus communément rencontré, et un des moyens de les représenter sur R est le Data Frame.</p>
+<h2 id="1.-Importer-des-donn&#233;es"><strong>1. Importer des donn&#233;es</strong><a class="anchor-link" href="#1.-Importer-des-donn&#233;es"> </a></h2><p>Nous allons voir comment importer des données au format CSV, à l'aide d'une extraction du recrutement géographique de l'hôpital Bicêtre en 2018, disponible sur le site de <a href="http://cartographie.atih.sante.fr">cartographie de l'ATIH</a>. R possède de base plusieurs fonctions prévues à cet effet; commençons par essayer <code>read.csv()</code>, dont le nom semble convenir à ce que nous souhaitons faire. Nous afficherons ensuite les 6 premières lignes du tableau à l'aide de la fonction <code>head()</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;donnees/2018_bicetre.csv&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>                                              Cartographie.PMSI...
+1 Référentiel géographique : France par code géographique PMSI; ; 
+2          Code;Libellé;Séjours PMSI MCO au lieu de résidence 2018
+3                                        01000;BOURG-EN-BRESSE;N/A
+4                                    01090;MONTMERLE-SUR-SAÔNE;N/A
+5                                                01100;OYONNAX;N/A
+6                                   01110;PLATEAU D&#39;HAUTEVILLE;N/A
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Les données ont bien été importées, mais pas elles n'ont pas vraiment la forme que l'on souhaite. En regardant de plus près les données, on s'aperçoit de plusieurs choses :</p>
+<ul>
+<li>Les différentes colonnes sont séparées par des <strong>points-virgules</strong> (au lieu de virgules)</li>
+<li>Le titre des colonnes n'est qu'à la <strong>3e ligne</strong> (au lieu de la première ligne)</li>
+<li>Les données manquantes sont signalées par la châine de caractères <strong>"N/A"</strong></li>
+</ul>
+<p>On en conclut donc que notre CSV est au format français (+ quelques autres pays), c'est-à-dire séparation des colonnes par des points-virgules et séparation de la partie décimale des nombres par une virgule (au lieu d'un point). On va donc pouvoir relancer la fonction <code>read.csv()</code> avec des <strong>arguments</strong> différents afin de prendre tout cela en compte.</p>
+<h2 id="Interlude-:-les-fonctions"><strong><em>Interlude : les fonctions</em></strong><a class="anchor-link" href="#Interlude-:-les-fonctions"> </a></h2><p>Depuis le début nous utilisons des fonctions (vous aurez remarqué que je les suffixe toujours de parenthèses sous la forme <code>fonction()</code>) sans vraiment savoir ce qu'elles sont. Très simplement, une fonction est un <strong>ensemble de commandes prédéfinies</strong> qui seront exécutées lorsque cette fonction sera appelée. Il existe un grand nombre de <strong>fonctions toutes faites fournies par R</strong> officiellement (les "built-in functions"), et bien plus encore qui sont partagées par la communauté des développeurs R sous la forme de ce qu'on appelle des <strong>librairies</strong> (ou des packages). On peut également en créer nous-mêmes pour automatiser des tâches répétitives, et la syntaxe est la suivante :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+nom_de_la_fonction <- function(argument_1, argument_2 ...) {
+   Corps de la fonction
+   return(objet_a_retourner)
+}
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><strong>Nom de la fonction</strong> : dans R, les fonctions sont également des objets, et on peut donc les stocker dans des variables comme on l'a fait précédemment pour des chiffres, des vecteurs, etc.</li>
+<li><strong>Arguments</strong> : lorsque l'on appelle une fonction, on lui fournit (optionnellement) des objets, qui seront stockés dans des variables fictives qu'on appelle les arguments, et qui seront utilisées dans le corps de la fonction</li>
+<li><strong>Corps de la fonction</strong> : ensemble des commandes prédéfinies, qui font usage des arguments</li>
+<li><strong>Objet à retourner</strong> : une fonction prend des objets en entrée, et retourne des objets en sortie. Par défaut, une fonction retourne le résultat de la dernière commande du corps de la fonction, mais on peut aussi explicitement retourner ce que l'on souhaite en spécifiant la fonction <code>return()</code></li>
+</ul>
+<p>Tout sera plus clair avec un exemple; définissons une fonction <code>somme()</code> qui prend entrée deux arguments et qui retourne leur somme (lancez la cellule suivante afin d'instancier la fonction) :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">somme</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">resultat</span> <span class="o">&lt;-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+    <span class="nf">return</span><span class="p">(</span><span class="n">resultat</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Vous aurez remarqué que dans la déclaration des arguments, nous avons attribué une valeur à <code>y</code> (mais pas à <code>x</code>). C'est ce qu'on appelle une valeur par défaut; nous allons revenir rapidement dessus. Maintenant que nous avons défini notre fonction, lançons la cellule suivante pour la tester dans plusieurs situations :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">somme</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">somme</span><span class="p">(</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">somme</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">somme</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="m">5</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] 7
+[1] 5
+[1] 5
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+Error in somme(y = 5): argument &#34;x&#34; is missing, with no default
+Traceback:
+
+1. print(somme(y = 5))
+2. somme(y = 5)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Analysons les réponses de nos quatre appels à la fonction <code>somme()</code> :</p>
+<ul>
+<li>Dans le premier cas, on a appelé la fonction avec comme arguments <code>x = 2</code> et <code>y = 5</code>, et le résultat est donc bien <code>2 + 5 = 7</code></li>
+<li>Dans le deuxième cas, la fonction n'a été appelée qu'avec un seul argument. Il a automatiquement été associé à <code>x</code>, et comme <strong>nous avions défini par défaut</strong> <code>y = 3</code>, la fonction nous retourne donc <code>x + y = 2 + 3 = 5</code></li>
+<li>Dans le troisième cas, on a fait exactement pareil qu'au dessus; on a juste déclaré explicitement que 2 devait être attribué à <code>x</code></li>
+<li>Dans le dernier cas, nous avons appelé la fonction avec une valeur pour <code>y</code>. Cependant, nous n'avions <strong>pas défini de valeur par défaut</strong> pour <code>x</code> quand nous avons créé la fonction, et R retourne alors une erreur qui nous le signale.</li>
+</ul>
+<p>Maintenant vous en savez suffisamment sur les fonctions et leurs arguments pour reprendre où nous en étions restés !</p>
+<h2 id="1bis.-Mieux-importer-des-donn&#233;es"><strong>1bis. Mieux importer des donn&#233;es</strong><a class="anchor-link" href="#1bis.-Mieux-importer-des-donn&#233;es"> </a></h2><p>On avait donc réussi à importer les données dans l'environnement R avec la fonction <code>read.csv()</code>, mais il faudrait prendre en compte quelques particularités pour qu'elles aient la bonne forme :</p>
+<ul>
+<li>Les différentes colonnes sont séparées par des <strong>points-virgules</strong> (au lieu de virgules)</li>
+<li>Le titre des colonnes n'est qu'à la <strong>3e ligne</strong> (au lieu de la première ligne); nous avons donc 2 lignes inutiles</li>
+<li>Les données manquantes sont signalées par la châine de caractères <strong>"N/A"</strong></li>
+</ul>
+<p><strong>Exercice</strong> On va donc réessayer avec <code>read.csv()</code>, mais cette fois en précisant quelques <strong>arguments</strong> pour l'aider. À vous de jouer en complétant l'appel à la fonction ci-dessous :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="c1"># ici le chemin vers le fichier CSV à importer, </span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="c1"># ici le caractère qui sépare les colonnes dans le fichier CSV,</span>
+    <span class="n">na.strings</span> <span class="o">=</span> <span class="c1"># ici le caractère qui signale les données manquantes, </span>
+    <span class="n">skip</span> <span class="o">=</span> <span class="c1"># ici le nombre de lignes en haut du fichier à sauter, </span>
+    <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="kc">FALSE</span>
+<span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Pour la solution, décommentez la ligne suivante (retirez le &quot;#&quot;) :</span>
+<span class="nf">source</span><span class="p">(</span><span class="s">&quot;solutions/04_data-frames_import.R&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+&gt; data &lt;- read.csv(file = &#34;donnees/2018_bicetre.csv&#34;, 
++     sep = &#34;;&#34;, na.strings = &#34;N/A&#34;, skip = 2, stringsAsFactors = FALSE)
+
+&gt; print(head(data))
+   Code                     Libellé Séjours.PMSI.MCO.au.lieu.de.résidence.2018
+1 01000             BOURG-EN-BRESSE                                         NA
+2 01090         MONTMERLE-SUR-SAÔNE                                         NA
+3 01100                     OYONNAX                                         NA
+4 01110        PLATEAU D&#39;HAUTEVILLE                                         NA
+5 01120                    MONTLUEL                                         NA
+6 01140 SAINT-DIDIER-SUR-CHALARONNE                                         NA
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Si tout s'est bien passé, les six premières lignes de nos données devraient maintenant ressembler à ça :</p>
+
+<pre><code>   Code                     Libellé Séjours.PMSI.MCO.au.lieu.de.résidence.2018
+1 01000             BOURG-EN-BRESSE                                         NA
+2 01090         MONTMERLE-SUR-SAÔNE                                         NA
+3 01100                     OYONNAX                                         NA
+4 01110        PLATEAU D'HAUTEVILLE                                         NA
+5 01120                    MONTLUEL                                         NA
+6 01140 SAINT-DIDIER-SUR-CHALARONNE                                         NA
+
+</code></pre>
+<p>C'est déjà mieux ! On a donc une colonne <code>Code</code> qui représente le code géographique PMSI, une deuxième colonne <code>Libellé</code> qui représente le nom de la commune et une troisième colonne <code>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</code> assez explicite.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Mieux-afficher-les-Data-Frames"><strong>2. Mieux afficher les Data Frames</strong><a class="anchor-link" href="#2.-Mieux-afficher-les-Data-Frames"> </a></h2><p>On a vu qu'on pouvait afficher le contenu d'une variable dans la console à l'aide de la fonction <code>print()</code>. C'est en général suffisant lorsque les données sont uni-dimensionnelles comme un vecteur ou un texte, mais dans le cas de données tabulaires, ça devient vite austère et maladroit. Pour pallier à cela, selon l'environnement de développement (IDE) que vous utilisez, il y a :</p>
+<ul>
+<li><strong>RStudio</strong> : la fonction <code>View()</code> permet d'ouvrir un Data Frame dans un tableau</li>
+<li><strong>Jupyter</strong> : il suffit d'enlever la fonction <code>print()</code> et d'appeler directement le Data Frame <em>(on pourrait d'ailleurs en faire de même pour afficher les vecteurs, mais je préfère garder la fonction <code>print()</code> dans ces cas là pour un rendu plus consistent qu'avec RStudio)</em></li>
+</ul>
+<p>Voyons voir ce que ça donne dans Jupyter :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">head</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 6 × 3</caption>
+<thead>
+	<tr><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>01000</td><td>BOURG-EN-BRESSE            </td><td>NA</td></tr>
+	<tr><td>01090</td><td>MONTMERLE-SUR-SAÔNE        </td><td>NA</td></tr>
+	<tr><td>01100</td><td>OYONNAX                    </td><td>NA</td></tr>
+	<tr><td>01110</td><td>PLATEAU D'HAUTEVILLE       </td><td>NA</td></tr>
+	<tr><td>01120</td><td>MONTLUEL                   </td><td>NA</td></tr>
+	<tr><td>01140</td><td>SAINT-DIDIER-SUR-CHALARONNE</td><td>NA</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Le format est déjà plus sympathique, une ligne nous affiche la taille du tableau au format <code>nb_lignes x nb_colonnes</code>, et en dessous de chaque nom de colonne nous avons le type des données contenues dans la colonne (ici, <code>&lt;chr&gt;</code> pour character et <code>&lt;int&gt;</code> pour integer). Voyons voir maintenant avec l'ensemble des données :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 5646 × 3</caption>
+<thead>
+	<tr><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>01000</td><td>BOURG-EN-BRESSE            </td><td>NA</td></tr>
+	<tr><td>01090</td><td>MONTMERLE-SUR-SAÔNE        </td><td>NA</td></tr>
+	<tr><td>01100</td><td>OYONNAX                    </td><td>NA</td></tr>
+	<tr><td>01110</td><td>PLATEAU D'HAUTEVILLE       </td><td>NA</td></tr>
+	<tr><td>01120</td><td>MONTLUEL                   </td><td>NA</td></tr>
+	<tr><td>01140</td><td>SAINT-DIDIER-SUR-CHALARONNE</td><td>NA</td></tr>
+	<tr><td>01150</td><td>LAGNIEU                    </td><td>NA</td></tr>
+	<tr><td>01160</td><td>PONT-D'AIN                 </td><td>NA</td></tr>
+	<tr><td>01170</td><td>GEX                        </td><td>NA</td></tr>
+	<tr><td>01190</td><td>PONT-DE-VAUX               </td><td>NA</td></tr>
+	<tr><td>01200</td><td>VALSERHÔNE                 </td><td>NA</td></tr>
+	<tr><td>01210</td><td>FERNEY-VOLTAIRE            </td><td>NA</td></tr>
+	<tr><td>01220</td><td>DIVONNE-LES-BAINS          </td><td>NA</td></tr>
+	<tr><td>01230</td><td>SAINT-RAMBERT-EN-BUGEY     </td><td>NA</td></tr>
+	<tr><td>01240</td><td>CERTINES                   </td><td>NA</td></tr>
+	<tr><td>01250</td><td>CEYZÉRIAT                  </td><td>NA</td></tr>
+	<tr><td>01260</td><td>VALROMEY-SUR-SÉRAN         </td><td>NA</td></tr>
+	<tr><td>01270</td><td>COLIGNY                    </td><td>NA</td></tr>
+	<tr><td>01280</td><td>PRÉVESSIN-MOËNS            </td><td>NA</td></tr>
+	<tr><td>01300</td><td>BELLEY                     </td><td>NA</td></tr>
+	<tr><td>01310</td><td>POLLIAT                    </td><td>NA</td></tr>
+	<tr><td>01320</td><td>CHALAMONT                  </td><td>NA</td></tr>
+	<tr><td>01330</td><td>VILLARS-LES-DOMBES         </td><td>NA</td></tr>
+	<tr><td>01340</td><td>ATTIGNAT                   </td><td>NA</td></tr>
+	<tr><td>01350</td><td>CULOZ                      </td><td>NA</td></tr>
+	<tr><td>01360</td><td>BÉLIGNEUX                  </td><td>NA</td></tr>
+	<tr><td>01370</td><td>VAL-REVERMONT              </td><td>NA</td></tr>
+	<tr><td>01380</td><td>BÂGÉ-DOMMARTIN             </td><td>NA</td></tr>
+	<tr><td>01390</td><td>SAINT-ANDRÉ-DE-CORCY       </td><td>NA</td></tr>
+	<tr><td>01400</td><td>CHÂTILLON-SUR-CHALARONNE   </td><td>NA</td></tr>
+	<tr><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+	<tr><td>9D014</td><td>ENTRE-DEUX             </td><td>NA</td></tr>
+	<tr><td>9D019</td><td>LA POSSESSION          </td><td>NA</td></tr>
+	<tr><td>9D020</td><td>LE PORT                </td><td>NA</td></tr>
+	<tr><td>9D025</td><td>LES AVIRONS            </td><td>NA</td></tr>
+	<tr><td>9D026</td><td>LES TROIS-BASSINS      </td><td>NA</td></tr>
+	<tr><td>9D027</td><td>L'ÉTANG-SALÉ           </td><td>NA</td></tr>
+	<tr><td>9D029</td><td>PETITE-ÎLE             </td><td>NA</td></tr>
+	<tr><td>9D030</td><td>LE TAMPON              </td><td>NA</td></tr>
+	<tr><td>9D031</td><td>LA PLAINE-DES-PALMISTES</td><td>NA</td></tr>
+	<tr><td>9D033</td><td>SALAZIE                </td><td>NA</td></tr>
+	<tr><td>9D036</td><td>SAINT-LEU              </td><td>NA</td></tr>
+	<tr><td>9D038</td><td>SAINTE-MARIE           </td><td>NA</td></tr>
+	<tr><td>9D039</td><td>SAINTE-ROSE            </td><td>NA</td></tr>
+	<tr><td>9D040</td><td>SAINT-ANDRÉ            </td><td>NA</td></tr>
+	<tr><td>9D041</td><td>SAINTE-SUZANNE         </td><td>NA</td></tr>
+	<tr><td>9D042</td><td>SAINT-PHILIPPE         </td><td>NA</td></tr>
+	<tr><td>9D050</td><td>SAINT-LOUIS            </td><td>NA</td></tr>
+	<tr><td>9D060</td><td>SAINT-PAUL             </td><td>NA</td></tr>
+	<tr><td>9D070</td><td>SAINT-BENOÎT           </td><td>NA</td></tr>
+	<tr><td>9D080</td><td>SAINT-JOSEPH           </td><td>NA</td></tr>
+	<tr><td>9F000</td><td>MAMOUDZOU              </td><td>NA</td></tr>
+	<tr><td>9F015</td><td>DZAOUDZI               </td><td>NA</td></tr>
+	<tr><td>9F020</td><td>CHIRONGUI              </td><td>NA</td></tr>
+	<tr><td>9F025</td><td>KANI-KÉLI              </td><td>NA</td></tr>
+	<tr><td>9F030</td><td>MTSAMBORO              </td><td>NA</td></tr>
+	<tr><td>9F040</td><td>SADA                   </td><td>NA</td></tr>
+	<tr><td>9F050</td><td>BANDRABOUA             </td><td>NA</td></tr>
+	<tr><td>9F060</td><td>DEMBENI                </td><td>NA</td></tr>
+	<tr><td>9F070</td><td>OUANGANI               </td><td>NA</td></tr>
+	<tr><td>9F080</td><td>TSINGONI               </td><td>NA</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On a donc 5646 lignes, correspondant chacune à une commune. Ça fait beaucoup, mais on se rend vite compte que la majorité d'entre elles n'a pas de donnée pour la colonne <code>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</code>, soit parce que les chiffres ne sont pas disponibles (secret statistique, faille dans le recueil), soit parce que l'hôpital de Bicêtre ne traite aucun habitant de ces communes. Comment faire pour retirer tout ce bruit et ne se focaliser que sur les parties du Data Frame qui nous intéressent ?</p>
+<h2 id="3.-Acc&#233;der-aux-&#233;l&#233;ments-d'un-Data-Frame"><strong>3. Acc&#233;der aux &#233;l&#233;ments d'un Data Frame</strong><a class="anchor-link" href="#3.-Acc&#233;der-aux-&#233;l&#233;ments-d'un-Data-Frame"> </a></h2><p>On a vu précédemment qu'on utilisait les crochets <code>[]</code> pour accéder aux éléments d'un vecteur. Par exemple <code>x[4]</code> permet d'accéder au 4e élément du vecteur <code>x</code>. Pour un Data Frame, on peut également utiliser les crochets, mais cette fois-ci avec une virgule pour séparer les deux dimensions : <code>[,]</code>. Voyons ça tout de suite avec l'exemple ci-dessous :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Pour plus de clarté, nous n&#39;allons travailler ici qu&#39;avec la &quot;tête&quot; du tableau</span>
+<span class="n">small_data</span> <span class="o">&lt;-</span> <span class="nf">head</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">small_data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 6 × 3</caption>
+<thead>
+	<tr><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>01000</td><td>BOURG-EN-BRESSE            </td><td>NA</td></tr>
+	<tr><td>01090</td><td>MONTMERLE-SUR-SAÔNE        </td><td>NA</td></tr>
+	<tr><td>01100</td><td>OYONNAX                    </td><td>NA</td></tr>
+	<tr><td>01110</td><td>PLATEAU D'HAUTEVILLE       </td><td>NA</td></tr>
+	<tr><td>01120</td><td>MONTLUEL                   </td><td>NA</td></tr>
+	<tr><td>01140</td><td>SAINT-DIDIER-SUR-CHALARONNE</td><td>NA</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="3.1-Indices"><strong>3.1 Indices</strong><a class="anchor-link" href="#3.1-Indices"> </a></h3><ul>
+<li>Si je veux afficher le contenu de la case qui se trouve sur la 3e ligne et la 2e colonne, je vais donc écrire <code>data[3, 2]</code>.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># 3e ligne et 2e colonne</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">small_data[3</span><span class="p">,</span> <span class="m">2</span><span class="n">]</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;OYONNAX&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Si je veux afficher la 3e ligne en entier, je peux laisser la deuxième dimension vide :</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># 3e ligne</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">small_data[3</span><span class="p">,</span> <span class="n">]</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   Code Libellé Séjours.PMSI.MCO.au.lieu.de.résidence.2018
+3 01100 OYONNAX                                         NA
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Même chose pour la colonne :</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># 2e colonne</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">small_data[</span><span class="p">,</span> <span class="m">2</span><span class="n">]</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;BOURG-EN-BRESSE&#34;             &#34;MONTMERLE-SUR-SAÔNE&#34;        
+[3] &#34;OYONNAX&#34;                     &#34;PLATEAU D&#39;HAUTEVILLE&#34;       
+[5] &#34;MONTLUEL&#34;                    &#34;SAINT-DIDIER-SUR-CHALARONNE&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Il est possible de sélectionner par le nom de colonne :</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># colonne &quot;Libellé&quot;</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">small_data[</span><span class="p">,</span> <span class="s">&quot;Libellé&quot;</span><span class="n">]</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;BOURG-EN-BRESSE&#34;             &#34;MONTMERLE-SUR-SAÔNE&#34;        
+[3] &#34;OYONNAX&#34;                     &#34;PLATEAU D&#39;HAUTEVILLE&#34;       
+[5] &#34;MONTLUEL&#34;                    &#34;SAINT-DIDIER-SUR-CHALARONNE&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Je peux également sélectionner plusieurs indice à l'aide de <strong>vecteurs</strong> :</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># lignes 1, 3, 4 et colonnes 1, 2</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">small_data</span><span class="nf">[c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span><span class="n">]</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   Code              Libellé
+1 01000      BOURG-EN-BRESSE
+3 01100              OYONNAX
+4 01110 PLATEAU D&#39;HAUTEVILLE
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Dont la notation <code>c(x:y)</code>, qui permet de créer un vecteur avec des chiffres allant de <code>x</code> jusqu'à <code>y</code> compris :</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># lignes 2, 3, 4, 5</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">small_data</span><span class="nf">[c</span><span class="p">(</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">),</span> <span class="n">]</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   Code              Libellé Séjours.PMSI.MCO.au.lieu.de.résidence.2018
+2 01090  MONTMERLE-SUR-SAÔNE                                         NA
+3 01100              OYONNAX                                         NA
+4 01110 PLATEAU D&#39;HAUTEVILLE                                         NA
+5 01120             MONTLUEL                                         NA
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="3.2-Bool&#233;ens"><strong>3.2 Bool&#233;ens</strong><a class="anchor-link" href="#3.2-Bool&#233;ens"> </a></h3><p>Comme pour les vecteurs, on peut aussi accéder aux valeurs d'un Data Frame par des vecteurs de booléens :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">small_data[</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">)</span><span class="n">]</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   Code                     Libellé
+1 01000             BOURG-EN-BRESSE
+2 01090         MONTMERLE-SUR-SAÔNE
+3 01100                     OYONNAX
+4 01110        PLATEAU D&#39;HAUTEVILLE
+5 01120                    MONTLUEL
+6 01140 SAINT-DIDIER-SUR-CHALARONNE
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Cette méthode de sélection peut paraître un peu rébarbative comme ça, mais elle est en réalité très utile pour appliquer des <strong>filtres conditionnels</strong> à nos Data Frames. Admettons que l'on veuille sélectionner la ligne dont le <code>Libellé</code> est <code>"OYONNAX"</code>. La première étape est de créer un vecteur de booléens de même longueur que le nombre de lignes de notre Data Frame, avec des <code>TRUE</code> quand la condition est remplie :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">filtre_lignes</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">small_data[</span><span class="p">,</span> <span class="s">&quot;Libellé&quot;</span><span class="n">]</span> <span class="o">==</span> <span class="s">&quot;OYONNAX&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">filtre_lignes</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] FALSE FALSE  TRUE FALSE FALSE FALSE
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Avec cette commande, R a effectué les étapes suivantes :</p>
+<ul>
+<li>Comparaison de tous les éléments de la colonne <code>Libellé</code> (qui est un vecteur) à la chaîne de caractères <code>"OYONNAX"</code></li>
+<li>Création d'un vecteur de même longueur, avec <code>TRUE</code> si la valeur correspond, <code>FALSE</code> sinon</li>
+<li>Stockage dans la variable <code>filtre_lignes</code></li>
+</ul>
+<p><em>PS : les parenthèses autour de <code>(small_data[, "Libellé"] == "OYONNAX")</code> sont optionnelles, et servent ici à délimiter les conditions pour plus de clarté; elles prendront tout leur sens lorsque nous verrons les conditions composées.</em></p>
+<p>Il ne nous reste plus qu'à appliquer le filtre que nous avons créé :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">small_data[filtre_lignes</span><span class="p">,</span> <span class="n">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 1 × 3</caption>
+<thead>
+	<tr><th></th><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>3</th><td>01100</td><td>OYONNAX</td><td>NA</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Exercice</strong> Dans la cellule ci-après, à partir des données complètes (<code>data</code> et non plus <code>small_data</code>) :</p>
+<ul>
+<li>Sélectionnez les lignes ne contenant pas de données manquantes. Pour cela, vous aurez besoin de la fonction <code>complete.cases()</code>, qui prend en argument un Data Frame et qui retourne un vecteur de booléens avec des <code>TRUE</code> quand la ligne est complète et <code>FALSE</code> sinon.</li>
+<li>N'affichez que la "tête" du Data Frame (les 6 premières lignes)</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Pour la solution, décommentez la ligne suivante (retirez le &quot;#&quot;) :</span>
+<span class="c1"># source(&quot;solutions/04_data-frames_donnees-manquantes.R&quot;, echo=TRUE)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Et voilà, maintenant vous possédez les bases requises pour faire des requêtes simples sur les données. On peut combiner plusieurs <strong>opérateurs logiques</strong> pour faire des filtres conditionnels de plus en plus complexes. Quelques exemples ci-dessous :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Ici j&#39;utilise la fonction substr() qui dans mon cas me renvoie une châine de caractères</span>
+<span class="c1"># correspondant aux lettres situées entre la 1ère et la 5e pour chaque élément de la</span>
+<span class="c1"># colonne Libellé.</span>
+
+<span class="n">condition_1</span> <span class="o">&lt;-</span> <span class="nf">complete.cases</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">condition_2</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">substr</span><span class="p">(</span><span class="n">data[</span><span class="p">,</span> <span class="s">&quot;Libellé&quot;</span><span class="n">]</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;SAINT&quot;</span><span class="p">)</span>
+
+<span class="n">data[condition_1</span> <span class="o">&amp;</span> <span class="n">condition_2</span><span class="p">,</span> <span class="n">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 31 × 3</caption>
+<thead>
+	<tr><th></th><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>60</th><td>02100</td><td>SAINT-QUENTIN             </td><td> 12</td></tr>
+	<tr><th scope=row>652</th><td>14170</td><td>SAINT-PIERRE-EN-AUGE      </td><td> 13</td></tr>
+	<tr><th scope=row>1289</th><td>27180</td><td>SAINT-SÉBASTIEN-DE-MORSENT</td><td> 23</td></tr>
+	<tr><th scope=row>1292</th><td>27220</td><td>SAINT-ANDRÉ-DE-L'EURE     </td><td> 15</td></tr>
+	<tr><th scope=row>1381</th><td>28480</td><td>SAINTIGNY                 </td><td> 12</td></tr>
+	<tr><th scope=row>2387</th><td>45140</td><td>SAINT-JEAN-DE-LA-RUELLE   </td><td> 12</td></tr>
+	<tr><th scope=row>3420</th><td>60850</td><td>SAINT-GERMER-DE-FLY       </td><td> 11</td></tr>
+	<tr><th scope=row>4506</th><td>77310</td><td>SAINT-FARGEAU-PONTHIERRY  </td><td> 85</td></tr>
+	<tr><th scope=row>4538</th><td>77650</td><td>SAINTE-COLOMBE            </td><td> 12</td></tr>
+	<tr><th scope=row>4540</th><td>77670</td><td>SAINT-MAMMÈS              </td><td> 22</td></tr>
+	<tr><th scope=row>4589</th><td>78210</td><td>SAINT-CYR-L'ÉCOLE         </td><td> 17</td></tr>
+	<tr><th scope=row>4615</th><td>78470</td><td>SAINT-RÉMY-LÈS-CHEVREUSE  </td><td> 24</td></tr>
+	<tr><th scope=row>4641</th><td>78730</td><td>SAINT-ARNOULT-EN-YVELINES </td><td> 12</td></tr>
+	<tr><th scope=row>4667</th><td>78C03</td><td>SAINT-GERMAIN-EN-LAYE     </td><td> 34</td></tr>
+	<tr><th scope=row>5213</th><td>89330</td><td>SAINT-JULIEN-DU-SAULT     </td><td> 12</td></tr>
+	<tr><th scope=row>5273</th><td>91180</td><td>SAINT-GERMAIN-LÈS-ARPAJON </td><td> 44</td></tr>
+	<tr><th scope=row>5279</th><td>91240</td><td>SAINT-MICHEL-SUR-ORGE     </td><td>112</td></tr>
+	<tr><th scope=row>5280</th><td>91250</td><td>SAINT-GERMAIN-LÈS-CORBEIL </td><td> 80</td></tr>
+	<tr><th scope=row>5283</th><td>91280</td><td>SAINT-PIERRE-DU-PERRAY    </td><td> 39</td></tr>
+	<tr><th scope=row>5307</th><td>91530</td><td>SAINT-CHÉRON              </td><td> 27</td></tr>
+	<tr><th scope=row>5324</th><td>91700</td><td>SAINTE-GENEVIÈVE-DES-BOIS </td><td>253</td></tr>
+	<tr><th scope=row>5354</th><td>92210</td><td>SAINT-CLOUD               </td><td> 29</td></tr>
+	<tr><th scope=row>5389</th><td>93200</td><td>SAINT-DENIS               </td><td>131</td></tr>
+	<tr><th scope=row>5407</th><td>93400</td><td>SAINT-OUEN-SUR-SEINE      </td><td> 53</td></tr>
+	<tr><th scope=row>5420</th><td>94100</td><td>SAINT-MAUR-DES-FOSSÉS     </td><td>178</td></tr>
+	<tr><th scope=row>5426</th><td>94160</td><td>SAINT-MANDÉ               </td><td> 33</td></tr>
+	<tr><th scope=row>5446</th><td>94410</td><td>SAINT-MAURICE             </td><td> 49</td></tr>
+	<tr><th scope=row>5474</th><td>95210</td><td>SAINT-GRATIEN             </td><td> 24</td></tr>
+	<tr><th scope=row>5482</th><td>95310</td><td>SAINT-OUEN-L'AUMÔNE       </td><td> 20</td></tr>
+	<tr><th scope=row>5486</th><td>95350</td><td>SAINT-BRICE-SOUS-FORÊT    </td><td> 14</td></tr>
+	<tr><th scope=row>5613</th><td>9D000</td><td>SAINT-DENIS               </td><td> 12</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Ici on remarquera que j&#39;ai regroupé entre parenthèses l&#39;opération logique entre la condition_2</span>
+<span class="c1"># et la condition_3 : je veux que les codes géographiques commencent par &quot;94&quot; OU &quot;95&quot;, mais dans </span>
+<span class="c1"># deux cas je veux que la condition_1 soit vérifiée</span>
+
+<span class="n">condition_1</span> <span class="o">&lt;-</span> <span class="nf">complete.cases</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">condition_2</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">substr</span><span class="p">(</span><span class="n">data[</span><span class="p">,</span> <span class="s">&quot;Code&quot;</span><span class="n">]</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;94&quot;</span><span class="p">)</span>
+<span class="n">condition_3</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">substr</span><span class="p">(</span><span class="n">data[</span><span class="p">,</span> <span class="s">&quot;Code&quot;</span><span class="n">]</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;92&quot;</span><span class="p">)</span>
+
+<span class="n">data[condition_1</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">condition_2</span> <span class="o">|</span> <span class="n">condition_3</span><span class="p">),</span> <span class="n">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 77 × 3</caption>
+<thead>
+	<tr><th></th><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>5343</th><td>92000</td><td>NANTERRE             </td><td>117</td></tr>
+	<tr><th scope=row>5344</th><td>92100</td><td>BOULOGNE-BILLANCOURT </td><td>167</td></tr>
+	<tr><th scope=row>5345</th><td>92110</td><td>CLICHY               </td><td> 41</td></tr>
+	<tr><th scope=row>5346</th><td>92120</td><td>MONTROUGE            </td><td>242</td></tr>
+	<tr><th scope=row>5347</th><td>92130</td><td>ISSY-LES-MOULINEAUX  </td><td>121</td></tr>
+	<tr><th scope=row>5348</th><td>92140</td><td>CLAMART              </td><td>317</td></tr>
+	<tr><th scope=row>5349</th><td>92150</td><td>SURESNES             </td><td> 49</td></tr>
+	<tr><th scope=row>5350</th><td>92160</td><td>ANTONY               </td><td>456</td></tr>
+	<tr><th scope=row>5351</th><td>92170</td><td>VANVES               </td><td> 75</td></tr>
+	<tr><th scope=row>5352</th><td>92190</td><td>MEUDON               </td><td>201</td></tr>
+	<tr><th scope=row>5353</th><td>92200</td><td>NEUILLY-SUR-SEINE    </td><td> 58</td></tr>
+	<tr><th scope=row>5354</th><td>92210</td><td>SAINT-CLOUD          </td><td> 29</td></tr>
+	<tr><th scope=row>5355</th><td>92220</td><td>BAGNEUX              </td><td>748</td></tr>
+	<tr><th scope=row>5356</th><td>92230</td><td>GENNEVILLIERS        </td><td> 64</td></tr>
+	<tr><th scope=row>5357</th><td>92240</td><td>MALAKOFF             </td><td>132</td></tr>
+	<tr><th scope=row>5358</th><td>92250</td><td>LA GARENNE-COLOMBES  </td><td> 31</td></tr>
+	<tr><th scope=row>5359</th><td>92260</td><td>FONTENAY-AUX-ROSES   </td><td>201</td></tr>
+	<tr><th scope=row>5360</th><td>92270</td><td>BOIS-COLOMBES        </td><td> 21</td></tr>
+	<tr><th scope=row>5361</th><td>92290</td><td>CHÂTENAY-MALABRY     </td><td>308</td></tr>
+	<tr><th scope=row>5362</th><td>92300</td><td>LEVALLOIS-PERRET     </td><td> 58</td></tr>
+	<tr><th scope=row>5363</th><td>92310</td><td>SÈVRES               </td><td> 35</td></tr>
+	<tr><th scope=row>5364</th><td>92320</td><td>CHÂTILLON            </td><td>271</td></tr>
+	<tr><th scope=row>5365</th><td>92330</td><td>SCEAUX               </td><td>125</td></tr>
+	<tr><th scope=row>5366</th><td>92340</td><td>BOURG-LA-REINE       </td><td>200</td></tr>
+	<tr><th scope=row>5367</th><td>92350</td><td>LE PLESSIS-ROBINSON  </td><td>173</td></tr>
+	<tr><th scope=row>5368</th><td>92370</td><td>CHAVILLE             </td><td> 42</td></tr>
+	<tr><th scope=row>5369</th><td>92380</td><td>GARCHES              </td><td> 22</td></tr>
+	<tr><th scope=row>5370</th><td>92390</td><td>VILLENEUVE-LA-GARENNE</td><td> 21</td></tr>
+	<tr><th scope=row>5371</th><td>92400</td><td>COURBEVOIE           </td><td>106</td></tr>
+	<tr><th scope=row>5372</th><td>92410</td><td>VILLE-D'AVRAY        </td><td> 21</td></tr>
+	<tr><th scope=row>⋮</th><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+	<tr><th scope=row>5431</th><td>94230</td><td>CACHAN                </td><td>1352</td></tr>
+	<tr><th scope=row>5432</th><td>94240</td><td>L'HA¾-LES-ROSES       </td><td>1938</td></tr>
+	<tr><th scope=row>5433</th><td>94250</td><td>GENTILLY              </td><td>1353</td></tr>
+	<tr><th scope=row>5434</th><td>94260</td><td>FRESNES               </td><td>1196</td></tr>
+	<tr><th scope=row>5435</th><td>94270</td><td>LE KREMLIN-BICÊTRE    </td><td>2617</td></tr>
+	<tr><th scope=row>5436</th><td>94290</td><td>VILLENEUVE-LE-ROI     </td><td> 212</td></tr>
+	<tr><th scope=row>5437</th><td>94300</td><td>VINCENNES             </td><td>  82</td></tr>
+	<tr><th scope=row>5438</th><td>94310</td><td>ORLY                  </td><td> 605</td></tr>
+	<tr><th scope=row>5439</th><td>94320</td><td>THIAIS                </td><td>1293</td></tr>
+	<tr><th scope=row>5440</th><td>94340</td><td>JOINVILLE-LE-PONT     </td><td>  46</td></tr>
+	<tr><th scope=row>5441</th><td>94350</td><td>VILLIERS-SUR-MARNE    </td><td>  61</td></tr>
+	<tr><th scope=row>5442</th><td>94360</td><td>BRY-SUR-MARNE         </td><td>  32</td></tr>
+	<tr><th scope=row>5443</th><td>94370</td><td>SUCY-EN-BRIE          </td><td>  71</td></tr>
+	<tr><th scope=row>5444</th><td>94380</td><td>BONNEUIL-SUR-MARNE    </td><td>  59</td></tr>
+	<tr><th scope=row>5445</th><td>94400</td><td>VITRY-SUR-SEINE       </td><td>5781</td></tr>
+	<tr><th scope=row>5446</th><td>94410</td><td>SAINT-MAURICE         </td><td>  49</td></tr>
+	<tr><th scope=row>5447</th><td>94420</td><td>LE PLESSIS-TRÉVISE    </td><td>  37</td></tr>
+	<tr><th scope=row>5448</th><td>94430</td><td>CHENNEVIÈRES-SUR-MARNE</td><td>  47</td></tr>
+	<tr><th scope=row>5449</th><td>94440</td><td>VILLECRESNES          </td><td>  66</td></tr>
+	<tr><th scope=row>5450</th><td>94450</td><td>LIMEIL-BRÉVANNES      </td><td>  92</td></tr>
+	<tr><th scope=row>5451</th><td>94460</td><td>VALENTON              </td><td>  77</td></tr>
+	<tr><th scope=row>5452</th><td>94470</td><td>BOISSY-SAINT-LÉGER    </td><td>  47</td></tr>
+	<tr><th scope=row>5453</th><td>94480</td><td>ABLON-SUR-SEINE       </td><td>  40</td></tr>
+	<tr><th scope=row>5455</th><td>94500</td><td>CHAMPIGNY-SUR-MARNE   </td><td> 230</td></tr>
+	<tr><th scope=row>5456</th><td>94510</td><td>LA QUEUE-EN-BRIE      </td><td>  18</td></tr>
+	<tr><th scope=row>5457</th><td>94520</td><td>MANDRES-LES-ROSES     </td><td>  33</td></tr>
+	<tr><th scope=row>5458</th><td>94550</td><td>CHEVILLY-LARUE        </td><td>1177</td></tr>
+	<tr><th scope=row>5459</th><td>94600</td><td>CHOISY-LE-ROI         </td><td>1009</td></tr>
+	<tr><th scope=row>5460</th><td>94700</td><td>MAISONS-ALFORT        </td><td> 158</td></tr>
+	<tr><th scope=row>5461</th><td>94800</td><td>VILLEJUIF             </td><td>4596</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Ici j&#39;utilise la fonction sum() pour faire la somme des éléments situés</span>
+<span class="c1"># dans la 3e colonne de mon Data Frame, et dont les lignes correspondent aux</span>
+<span class="c1"># critères définis par ma condition_1 ET ma condition_2</span>
+
+<span class="n">condition_1</span> <span class="o">&lt;-</span> <span class="nf">complete.cases</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">condition_2</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">substr</span><span class="p">(</span><span class="n">data[</span><span class="p">,</span> <span class="s">&quot;Code&quot;</span><span class="n">]</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;94&quot;</span><span class="p">)</span>
+
+<span class="n">nb_sejours_94</span> <span class="o">&lt;-</span> <span class="nf">sum</span><span class="p">(</span><span class="n">data[condition_1</span> <span class="o">&amp;</span> <span class="n">condition_2</span><span class="p">,</span> <span class="m">3</span><span class="n">]</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">nb_sejours_94</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] 31633
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="3.3-Autres-m&#233;thodes"><strong>3.3 Autres m&#233;thodes</strong><a class="anchor-link" href="#3.3-Autres-m&#233;thodes"> </a></h3><p>Il existe d'autres méthodes très populaires de requêter des données dans un Data Frame, que je ne mentionnerai que brièvement ici pour ne pas trop embrouiller votre esprit car elles opèrent dans une logique un peu différente :</p>
+<ul>
+<li>L'opérateur <code>$</code> : on peut appeler directement une colonne par son nom (sans les guillemets) avec la syntaxe <code>dataframe$nom_de_la_colonne</code></li>
+<li>La fonction <code>subset()</code></li>
+<li>Les fonctions de la librairie <code>dplyr</code>, qui sont des fonctions qui ont été développées par Hadley Wickham et la communauté R, afin notamment de créer une syntaxe plus verbeuse et plus proche du language parlé</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Cr&#233;er-de-nouvelles-colonnes"><strong>4. Cr&#233;er de nouvelles colonnes</strong><a class="anchor-link" href="#4.-Cr&#233;er-de-nouvelles-colonnes"> </a></h2><p>En général, il est de bonne pratique de ne pas toucher aux données d'origine pour pouvoir y revenir si besoin, et plutôt de créer de nouvelles colonnes à partir de celles d'origine si l'on veut apporter des modifications. Voyons le cas le plus simple, et créons une colonne remplie de <code>1</code> que l'on appellera <code>"uno"</code> :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">data_complet</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="nf">[complete.cases</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">]</span> <span class="c1"># ici je ne garde que les lignes sans données manquantes</span>
+
+<span class="n">data_complet[</span><span class="p">,</span> <span class="s">&quot;uno&quot;</span><span class="n">]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">data_complet</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 6 × 5</caption>
+<thead>
+	<tr><th></th><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th><th scope=col>uno</th><th scope=col>tre</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>60</th><td>02100</td><td>SAINT-QUENTIN       </td><td>12</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>77</th><td>02300</td><td>CHAUNY              </td><td>14</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>87</th><td>02400</td><td>CHÂTEAU-THIERRY     </td><td>17</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>225</th><td>06000</td><td>NICE                </td><td>15</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>327</th><td>08000</td><td>CHARLEVILLE-MÉZIÈRES</td><td>15</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>392</th><td>10000</td><td>TROYES              </td><td>17</td><td>1</td><td>3</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Il m'a suffit de requêter une colonne qui n'existait pas encore, et d'y assigner la valeur <code>1</code>. R a fait deux choses automatiquement :</p>
+<ul>
+<li>Aucune colonne n'existait au nom de <code>"uno"</code>, et R en a donc créé une nouvelle</li>
+<li>Normalement on aurait dû assigner un vecteur de la taille du nombre de ligne du Data Frame à cette nouvelle colonne. R a remarquait que ce n'était pas le cas, et a donc répliqué la valeur dans toutes les lignes</li>
+</ul>
+<p>Et maintenant, créons une colonne <code>"tre"</code> qui vaut trois fois la valeur de la colonne <code>"uno"</code> :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">data_complet[</span><span class="p">,</span> <span class="s">&quot;tre&quot;</span><span class="n">]</span> <span class="o">&lt;-</span> <span class="m">3</span> <span class="o">*</span> <span class="n">data_complet[</span><span class="p">,</span> <span class="s">&quot;uno&quot;</span><span class="n">]</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">data_complet</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 6 × 5</caption>
+<thead>
+	<tr><th></th><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th><th scope=col>uno</th><th scope=col>tre</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>60</th><td>02100</td><td>SAINT-QUENTIN       </td><td>12</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>77</th><td>02300</td><td>CHAUNY              </td><td>14</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>87</th><td>02400</td><td>CHÂTEAU-THIERRY     </td><td>17</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>225</th><td>06000</td><td>NICE                </td><td>15</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>327</th><td>08000</td><td>CHARLEVILLE-MÉZIÈRES</td><td>15</td><td>1</td><td>3</td></tr>
+	<tr><th scope=row>392</th><td>10000</td><td>TROYES              </td><td>17</td><td>1</td><td>3</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Fonctions-utiles-pour-mieux-conna&#238;tre-nos-Data-Frames"><strong>5. Fonctions utiles pour mieux conna&#238;tre nos Data Frames</strong><a class="anchor-link" href="#5.-Fonctions-utiles-pour-mieux-conna&#238;tre-nos-Data-Frames"> </a></h2><p>Il existe une multitude de fonctions de bases très utiles pour afficher des informations sur les Data Frames :</p>
+<ul>
+<li><code>nrow()</code> et <code>ncol()</code> : affichent respectivement le nombre de lignes et le nombre de colonnes</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">ncol</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] 5646
+[1] 3
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><code>colnames()</code> : affiche un vecteur avec le nom des colonnes</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">colnames</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;Code&#34;                                      
+[2] &#34;Libellé&#34;                                   
+[3] &#34;Séjours.PMSI.MCO.au.lieu.de.résidence.2018&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><code>head()</code> et <code>tail()</code> : affichent respectivement les 6 premières et les 6 dernières lignes</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">tail</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<caption>A data.frame: 6 × 3</caption>
+<thead>
+	<tr><th></th><th scope=col>Code</th><th scope=col>Libellé</th><th scope=col>Séjours.PMSI.MCO.au.lieu.de.résidence.2018</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>5641</th><td>9F030</td><td>MTSAMBORO </td><td>NA</td></tr>
+	<tr><th scope=row>5642</th><td>9F040</td><td>SADA      </td><td>NA</td></tr>
+	<tr><th scope=row>5643</th><td>9F050</td><td>BANDRABOUA</td><td>NA</td></tr>
+	<tr><th scope=row>5644</th><td>9F060</td><td>DEMBENI   </td><td>NA</td></tr>
+	<tr><th scope=row>5645</th><td>9F070</td><td>OUANGANI  </td><td>NA</td></tr>
+	<tr><th scope=row>5646</th><td>9F080</td><td>TSINGONI  </td><td>NA</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><code>str()</code> : affiche la structure du Data Frame, dont le nom et type des différentes colonnes</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#39;data.frame&#39;:	5646 obs. of  3 variables:
+ $ Code                                      : chr  &#34;01000&#34; &#34;01090&#34; &#34;01100&#34; &#34;01110&#34; ...
+ $ Libellé                                   : chr  &#34;BOURG-EN-BRESSE&#34; &#34;MONTMERLE-SUR-SAÔNE&#34; &#34;OYONNAX&#34; &#34;PLATEAU D&#39;HAUTEVILLE&#34; ...
+ $ Séjours.PMSI.MCO.au.lieu.de.résidence.2018: int  NA NA NA NA NA NA NA NA NA NA ...
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><code>summary()</code> : affiche des statistiques de base sur chaque colonne, comme les valeurs min/max/moy et le nombre de données manquantes pour les colonnes numériques</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>     Code             Libellé         
+ Length:5646        Length:5646       
+ Class :character   Class :character  
+ Mode  :character   Mode  :character  
+                                      
+                                      
+                                      
+                                      
+ Séjours.PMSI.MCO.au.lieu.de.résidence.2018
+ Min.   :  11.0                            
+ 1st Qu.:  16.0                            
+ Median :  32.0                            
+ Mean   : 117.9                            
+ 3rd Qu.:  65.0                            
+ Max.   :5781.0                            
+ NA&#39;s   :5165                              </pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="00_master.ipynb">Retour au sommaire</a> <br>
+Cours précédent : <a href="03_vectors.ipynb">Opérations et manipulations de vecteurs</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    

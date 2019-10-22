@@ -1,0 +1,572 @@
+---
+redirect_from:
+  - "/02-types"
+interact_link: content/02_types.ipynb
+kernel_name: ir
+has_widgets: false
+title: |-
+  Types d'objets et de données
+prev_page:
+  url: /01_intro.html
+  title: |-
+    Introduction et premiers pas
+next_page:
+  url: /03_vectors.html
+  title: |-
+    Manipulations et opérations de vecteurs
+suffix: .ipynb
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Chapitre-2-:-Types-d'objets-et-de-donn&#233;es"><strong>Chapitre 2 : Types d'objets et de donn&#233;es</strong><a class="anchor-link" href="#Chapitre-2-:-Types-d'objets-et-de-donn&#233;es"> </a></h1>
+<pre><code>NGUYEN Dinh-Phong
+DIM HuPS, Hôpital Bicêtre, AP-HP
+
+</code></pre>
+<p>Comme on a pu le voir précédemment, lorsqu'on programme on utilise ce qu'on appelle des <strong>variables</strong> pour stocker diverses informations, via l'opérateur <code>&lt;-</code>. Ces variables ne sont rien d'autre que des espaces de mémoire dans lequels on peut stocker des <strong>objets R</strong>, dont les plus fréquemment rencontrés sont :</p>
+<ul>
+<li>les <strong>Vectors</strong></li>
+<li>les <strong>Lists</strong></li>
+<li>les <strong>Matrices</strong></li>
+<li>les <strong>Arrays</strong></li>
+<li>les <strong>Factors</strong></li>
+<li>les <strong>Data Frames</strong></li>
+</ul>
+<p>Ces objets représentent différentes manières de stocker des données. Ces dernières peuvent être de différentes natures, regroupées dans ce que l'on appelle des <strong>types de données</strong> :</p>
+<ul>
+<li><strong>Numeric</strong> (les chiffres et nombres) qui regroupe les sous-types suivants :<ul>
+<li><em>Integer</em> (les entiers naturels) : <code>23L, 5L, 0L</code></li>
+<li><em>Single</em> et <em>Double</em> (les nombres décimaux) : <code>23.0, 12.5, 0.2334</code> (par défaut, R convertit les chiffres/nombres au format <em>Double</em>)</li>
+</ul>
+</li>
+<li><strong>Character</strong> (le texte, toujours entre guillemets) : <code>"Hello", "TRUE", "123", "3 quarts"</code></li>
+<li><strong>Locical</strong> (les booléens) : <code>TRUE</code>, <code>FALSE</code></li>
+<li><strong>Complex</strong> (les nombres complexes) : <code>33 + 3i</code></li>
+<li>+/- <strong>Raw</strong> (stockage en hexadécimal)</li>
+</ul>
+<p>Certains objets ne peuvent stocker que des données du même type, comme les <em>vectors</em> et les <em>matrices</em>, d'autres permettent de stocker des données de plusieurs types différents, comme les <em>lists</em> et les <em>Data Frames</em>. Le tableau suivant résume ces informations pour les objets les plus utilisés en pratique :</p>
+<div style="float: left;"> 
+
+| Dimensions | Type unique | Types multiples |
+| --- | --- | --- |
+| <b>1-dimension</b> | <b>Vector</b> <br> ![vector](./img/02_vector.png)| <b>List</b> <br> ![list](./img/02_list.png) |
+| <b>2-dimensions</b> | <b>Matrix</b> <br> ![vector](./img/02_matrix.png) | <b>Data Frame</b> <br> ![list](./img/02_dataframe.png) |
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-Vectors"><strong>1. Vectors</strong><a class="anchor-link" href="#1.-Vectors"> </a></h2><p>Les <strong>vecteurs</strong> sont les objets les plus basiques de R, et correspondent à un ensemble de valeurs du même <strong>type de données</strong>. À partir de ces vecteurs, on va pouvoir construire tous les autres objets R.</p>
+<p>Pour créer un nouveau vecteur, on utilise la fonction <code>c()</code> (pour <em>combine</em>) comme suit :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;pbr&quot;</span><span class="p">,</span> <span class="s">&quot;bct&quot;</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Plusieurs fonctions utiles permettent de décrire le contenu d'un vecteur (mais aussi des autres objets) :</p>
+<ul>
+<li><code>print()</code> : affiche le contenu de l'objet</li>
+<li><code>is.vector()</code> : affiche TRUE si l'objet est un vector, FALSE sinon</li>
+<li><code>typeof()</code> : affiche le type des données contenues dans l'objet (ou la nature de l'objet, si plusieurs types)</li>
+<li><code>length()</code> : affiche le nombre d'éléments dans l'objet</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;pbr&#34; &#34;bct&#34; &#34;abc&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">is.vector</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+TRUE
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">typeof</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+'character'
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+3
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Exercice</strong></p>
+<p>Dans la cellule ci-dessous, créez un nouveau vecteur contenant les chiffres <code>26</code>, <code>88</code> et <code>1</code> et assignez le à la variable <code>y</code>. <br> Aidez-vous ensuite des fonctions que l'on vient de voir afin de décrire le contenu de <code>y</code>. <br> Vous pouvez écrire toutes les commandes dans la même cellule (il suffit d'aller à la ligne entre chaque commande) ou créer une nouvelle cellule pour chaque commande (en cliquant sur le bouton ➕ de la barre de navigation de Jupyter).</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Pour la solution, décommentez la ligne suivante (retirez le &quot;#&quot;) :</span>
+<span class="c1"># source(&quot;solutions/02_types_vectors.R&quot;, echo=TRUE)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Lists"><strong>2. Lists</strong><a class="anchor-link" href="#2.-Lists"> </a></h2><p>Les listes sont des objets pouvant contenir des éléments de plusieurs types, voire même d'autres objets. Ils sont créés à l'aide de la fonction <code>list()</code></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">hopital</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="s">&quot;Ambroise Paré&quot;</span><span class="p">,</span> <span class="m">92</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">hopital</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[1]]
+[1] &#34;Ambroise Paré&#34;
+
+[[2]]
+[1] 92
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On peut également attribuer un nom aux éléments d'une liste de la manière suivante :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">hopital</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="n">nom</span> <span class="o">=</span> <span class="s">&quot;Ambroise Paré&quot;</span><span class="p">,</span> <span class="n">département</span> <span class="o">=</span> <span class="m">92</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">hopital</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>$nom
+[1] &#34;Ambroise Paré&#34;
+
+$département
+[1] 92
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>NB : les curieu·x·ses qui auront essayé la fonction <code>is.vector()</code> sur une liste se demanderont pourquoi la console affiche <code>TRUE</code>. Sans rentrer dans les détails, R considère en effet les listes comme des vecteurs spéciaux.</em></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Matrices"><strong>3. Matrices</strong><a class="anchor-link" href="#3.-Matrices"> </a></h2><p>Les matrices permettent de stocker des données bi-dimensionnelles (ou "rectangulaires") du même type. Ils sont créés à l'aide de la fonction <code>matrix()</code></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Ici, on précise nrow = 4 pour que R force la matrice à avoir 4 rangées</span>
+<span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">),</span> <span class="n">nrow</span> <span class="o">=</span> <span class="m">4</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>     [,1] [,2] [,3] [,4]
+[1,]    1    1    1    1
+[2,]    2    2    2    2
+[3,]    3    3    3    3
+[4,]    4    4    4    4
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Data-Frames"><strong>4. Data Frames</strong><a class="anchor-link" href="#4.-Data-Frames"> </a></h2><p>Les Data Frames permettent de stocker des données bi-dimensionnelles (ou "rectangulaires") de différents types. C'est l'objet qui se rapproche le plus d'une feuille Excel, et donc ce que l'on va utiliser le plus souvent en analyse de données classique. On peut assimiler un Data Frame à une liste de vecteurs de même longueur, et on le crée avec la fonction <code>data.frame()</code> comme suit :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">patients</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span>
+    <span class="n">NIP</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;1237383859&quot;</span><span class="p">,</span> <span class="s">&quot;1727583930&quot;</span><span class="p">,</span> <span class="s">&quot;2839593024&quot;</span><span class="p">,</span> <span class="s">&quot;4436759938&quot;</span><span class="p">),</span>
+    <span class="n">nom</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Dupont&quot;</span><span class="p">,</span> <span class="s">&quot;Dupond&quot;</span><span class="p">,</span> <span class="s">&quot;Du Pont&quot;</span><span class="p">,</span> <span class="s">&quot;Dup Hon&quot;</span><span class="p">),</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">12</span><span class="p">,</span> <span class="m">45</span><span class="p">,</span> <span class="m">96</span><span class="p">,</span> <span class="m">34</span><span class="p">),</span>
+    <span class="n">vivant</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">),</span>
+    <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="kc">FALSE</span>
+<span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">patients</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>         NIP     nom age vivant
+1 1237383859  Dupont  12   TRUE
+2 1727583930  Dupond  45   TRUE
+3 2839593024 Du Pont  96  FALSE
+4 4436759938 Dup Hon  34   TRUE
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On remarquera deux particularités dans la commande ci-dessus :</p>
+<ul>
+<li>La <strong>syntaxe</strong> : on aurait pu taper la commande qui a servi à créer le Data Frame <code>patients</code> sur une seule ligne, mais on se rend bien compte que ça serait vite devenu illisible. Moyennant le respect de certaines règles, chacun·e est libre d'écrire du code comme il lui plait, mais il existe des conventions qui permettent d'harmoniser les pratiques et favoriser la compréhension de la lecture du code. Ici par exemple, on retourne à la ligne et on incrémente d'un <code>Tab</code> à chaque nouvel argument de la fonction.</li>
+<li><code>stringsAsFactors = FALSE</code> : cet argument impose au Data Frame de laisser les colonnes de type <code>character</code> telles quelles, au lieu de les convertir en <code>Factors</code>. Nous verrons plus tard ce que cela implique, mais pour l'instant considérons qu'il faille inclure <code>stringsAsFactors=  FALSE</code> à chaque fois que l'on crée un Data Frame.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Exercice</strong></p>
+<p>Complétez la cellule ci-dessous pour créer un Data Frame à partir des vecteurs déjà créés.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">nda</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;290022559&quot;</span><span class="p">,</span> <span class="s">&quot;290499339&quot;</span><span class="p">,</span> <span class="s">&quot;289449003&quot;</span><span class="p">)</span>
+<span class="n">nom</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Martin&quot;</span><span class="p">,</span> <span class="s">&quot;Marre Tain&quot;</span><span class="p">,</span> <span class="s">&quot;Mahrtain&quot;</span><span class="p">)</span>
+<span class="n">duree_sejour</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">34</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">85</span><span class="p">)</span>
+
+<span class="n">simpa</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span>
+    <span class="c1"># Compléter ce qui manque ici entre les parenthèses</span>
+<span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">simpa</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Pour la solution, décommentez la ligne suivante (retirez le &quot;#&quot;) :</span>
+<span class="c1"># source(&quot;solutions/02_types_dataframes.R&quot;, echo=TRUE)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="00_master.ipynb">Retour au sommaire</a> <br>
+Cours précédent : <a href="01_intro.ipynb">Introduction et premiers pas</a> <br>
+Cours suivant : <a href="03_vectors.ipynb">Opérations et manipulations de vecteurs</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
