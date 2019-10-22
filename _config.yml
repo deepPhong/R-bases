@@ -22,7 +22,7 @@ email: dinh-phong.nguyen@aphp.fr
 description: >-
   This is an example book built with Jupyter Books.
 
-baseurl: /  # the subpath of your site, e.g. /blog. If there is no subpath for your site, use an empty string ""
+baseurl: /R-bases  # the subpath of your site, e.g. /blog. If there is no subpath for your site, use an empty string ""
 url: https://deepphong.github.io     # the base hostname & protocol for your site, e.g. http://example.com
 
 
