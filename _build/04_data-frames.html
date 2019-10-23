@@ -39,7 +39,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;donnees/2018_bicetre.csv&quot;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;data/2018_bicetre.csv&quot;</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </pre></div>
 
@@ -83,23 +83,11 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 </ul>
 <p>On en conclut donc que notre CSV est au format français (+ quelques autres pays), c'est-à-dire séparation des colonnes par des points-virgules et séparation de la partie décimale des nombres par une virgule (au lieu d'un point). On va donc pouvoir relancer la fonction <code>read.csv()</code> avec des <strong>arguments</strong> différents afin de prendre tout cela en compte.</p>
 <h2 id="Interlude-:-les-fonctions"><strong><em>Interlude : les fonctions</em></strong><a class="anchor-link" href="#Interlude-:-les-fonctions"> </a></h2><p>Depuis le début nous utilisons des fonctions (vous aurez remarqué que je les suffixe toujours de parenthèses sous la forme <code>fonction()</code>) sans vraiment savoir ce qu'elles sont. Très simplement, une fonction est un <strong>ensemble de commandes prédéfinies</strong> qui seront exécutées lorsque cette fonction sera appelée. Il existe un grand nombre de <strong>fonctions toutes faites fournies par R</strong> officiellement (les "built-in functions"), et bien plus encore qui sont partagées par la communauté des développeurs R sous la forme de ce qu'on appelle des <strong>librairies</strong> (ou des packages). On peut également en créer nous-mêmes pour automatiser des tâches répétitives, et la syntaxe est la suivante :</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-nom_de_la_fonction <- function(argument_1, argument_2 ...) {
-   Corps de la fonction
-   return(objet_a_retourner)
-}
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">nom_de_la_fonction</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">argument_1</span><span class="p">,</span> <span class="n">argument_2</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">Corps</span> <span class="n">de</span> <span class="n">la</span> <span class="n">fonction</span>
+   <span class="nf">return</span><span class="p">(</span><span class="n">objet_a_retourner</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 <ul>
 <li><strong>Nom de la fonction</strong> : dans R, les fonctions sont également des objets, et on peut donc les stocker dans des variables comme on l'a fait précédemment pour des chiffres, des vecteurs, etc.</li>
 <li><strong>Arguments</strong> : lorsque l'on appelle une fonction, on lui fournit (optionnellement) des objets, qui seront stockés dans des variables fictives qu'on appelle les arguments, et qui seront utilisées dans le corps de la fonction</li>

@@ -6,6 +6,7 @@ body {
   // Use system font stack:
   // https://css-tricks.com/snippets/css/system-font-stack/
   font-family: $global-font-family !important;
+  text-align: justify;
   $color: $color-text;
 }
 
