@@ -16,5 +16,4 @@ body {
   font-size: ($inuit-global-font-size / 16px) * 1em; /* [1] */
   line-height: $inuit-global-line-height / $inuit-global-font-size; /* [1] */
   min-height: 100%; /* [2] */
-  min-width: 80%;
 }
