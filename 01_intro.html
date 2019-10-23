@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://deepphong.github.io/R-bases/01_intro.html",
   "headline": "Introduction et premiers pas",
-  "datePublished": "2019-10-23T14:23:18+00:00",
-  "dateModified": "2019-10-23T14:23:18+00:00",
+  "datePublished": "2019-10-23T17:26:29+00:00",
+  "dateModified": "2019-10-23T17:26:29+00:00",
   "description": "        Chapitre 1 : Introduction et premiers pas Pr&#233;ambule : langage de programmation Un langage de programmation est une manière conventionnelle de pr...",
   "author": {
     "@type": "Person",
@@ -515,8 +515,8 @@ initFunction(initPrint)
 <li><strong>Versatile</strong> : peut être utilisé pour tous les usages liés à la donnée (ex : statistiques, graphiques, cartographie, applications web, rapports, machine learning/IA, etc.)</li>
 <li><strong>Reproducibilité</strong> : sa nature de langage de programmation permet de reproduire les résultats d'une étude ou d'une analyse en partageant les codes sources ; très utile pour les analyses récurrentes périodiquement (ex : analyses d'activité)</li>
 </ul>
-<h3 id="1.1-Quid-d'Excel-et-des-autres-solutions-?">1.1 Quid d'Excel et des autres solutions ?<a class="anchor-link" href="#1.1-Quid-d'Excel-et-des-autres-solutions-?"> </a></h3><p><strong>STATA/SPSS/MATLAB</strong> : cher, et beaucoup moins de possibilités. Popularité en déclin.</p>
-<p><strong>SAS</strong> : pareil, mais encore plus cher. Choisir SAS, c'est ruiner son GH/Institution/Laboratoire et forcer ses internes à utiliser des solutions qui les limiteront plus tard.</p>
+<h3 id="1.1-Quid-d'Excel-et-des-autres-solutions-?">1.1 Quid d'Excel et des autres solutions ?<a class="anchor-link" href="#1.1-Quid-d'Excel-et-des-autres-solutions-?"> </a></h3><p><strong>STATA/SPSS/MATLAB</strong> : payant, et beaucoup (beaucoup) moins de possibilités. Popularité en déclin.</p>
+<p><strong>SAS</strong> : même chose qu'au-dessus, mais (beaucoup) plus cher.</p>
 <p><strong>Microsoft Excel</strong> : outil puissant de visualisation et de traitement de données. Il est relativement polyvalent et intuitif à l'utilisation, et a l'avantage d'être connu de tous. Il est néanmoins très rapidement limité pour une pratique rigoureuse et/ou avancée :</p>
 <ul>
 <li>Peu adapté aux "grosses" données : ralentissements, défilement infini pour accéder aux zones d'intérêt</li>
@@ -525,12 +525,11 @@ initFunction(initPrint)
 <li>Automatisation des tâches laborieuse et limitée (langage VBA uniquement limité aux applications de l'écosystème Microsoft Office)</li>
 <li>Obligation de modifier les données d'origine pour modifier un tableau (très mauvaise pratique)</li>
 </ul>
-<h3 id="1.2-RStudio-et-Jupyter">1.2 RStudio et Jupyter<a class="anchor-link" href="#1.2-RStudio-et-Jupyter"> </a></h3><p>Bien que l'on puisse utiliser utiliser R via l'interface graphique par défaut, celle-ci est un peu austère et ne possède que très peu de fonctionnalités ajoutées au langage. La très grande majorité des utilisateurs préfère utiliser un <strong>environnement de développement</strong> (IDE, pour integrated development environment), qui permet notamment d'augmenter la productivité des développeurs via une interface plus intuitive, un éditeur de texte adéquat, ainsi que des outils d'automatisation et d'aide à la résolution de bugs. Les deux IDE les plus utilisés sont :</p>
+<h3 id="1.2-RStudio-et-Jupyter">1.2 RStudio et Jupyter<a class="anchor-link" href="#1.2-RStudio-et-Jupyter"> </a></h3><p>Bien que l'on puisse utiliser utiliser R via l'interface graphique par défaut, celle-ci est un peu austère et ne possède que très peu de fonctionnalités ajoutées au langage. La très grande majorité des utilisateurs préfère utiliser un <strong>environnement de développement</strong> (IDE, pour integrated development environment), qui permet notamment d'augmenter la productivité des développeurs via une interface plus intuitive, un éditeur de texte adéquat avec auto-complétion, ainsi que des outils d'automatisation et d'aide à la résolution de bugs. Les deux IDE les plus utilisés sont :</p>
 <ul>
 <li><strong>RStudio</strong> : un IDE entièrement développé autour du langage R et une intégration parfaite de ses extensions (ex : RMarkdown/RNotebook pour produire des rapports, Shiny pour réaliser et déployer des applications web). De loin le plus utilisé et le plus adapté à R.</li>
-<li><strong>Jupyter</strong> : un IDE multi-langages (Julia, Python, et R initialement, maintenant plus que ça), très pratique pour un environnement où les utilisateurs utilisent différents langages comme à l'Entrepôt de Données de Santé de l'AP-HP. Également un bon outil pédagogique pour les cours/TP, car il permet d'écrire et de d'exécuter directement des lignes de code dans un environnement interactif, qu'on appelle un notebook (le support que vous êtes actuellement en train de lire). <strong>Colab</strong> est un équivalent disponible en ligne, et présente l'avantage de n'avoir rien à installer.</li>
+<li><strong>Jupyter</strong> : un IDE multi-langages (Julia, Python, et R initialement, maintenant bien plus que ça), très pratique pour un environnement où les utilisateurs utilisent différents langages. Également un bon outil pédagogique pour les cours/TP, car il permet d'écrire et de d'exécuter directement des lignes de code dans un environnement interactif, qu'on appelle un notebook ; le cours que vous êtes en train de lire a été entièrement écrit avec Jupyter. <strong>Colab</strong> est un équivalent disponible en ligne développé par Google, et présente l'avantage de n'avoir rien à installer.</li>
 </ul>
-<p>Ce cours a été écrit avec Jupyter pour des raisons pédagogiques et de disponibilité sur les serveurs de l'AP-HP, mais les commandes sont transposables telles quelles dans RStudio, qui est l'outil que je recommande d'utiliser au quotidien.</p>
 
 </div>
 </div>
@@ -541,12 +540,13 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Installation"><strong>2. Installation</strong><a class="anchor-link" href="#2.-Installation"> </a></h2><p>Pour ce cours il n'y a rien à installer car vous pouvez réaliser les exercices directement dans les cellules de code du notebook Jupyter/Colab. Mais si vous souhaitez par la suite mettre en place un environnement de travail R sur votre ordinateur personnel, suivez les instructions suivantes :</p>
+<h2 id="2.-Installation"><strong>2. Installation</strong><a class="anchor-link" href="#2.-Installation"> </a></h2><p>Pour un usage classique, l'IDE que je vous recommande d'utiliser est RStudio. Plus que deux petites étapes avant de pouvoir mettre les mains dans le cambouis :</p>
 <ol>
-<li><a href="https://cran.r-project.org/mirrors.html">Télécharger et installer R</a></li>
-<li><a href="https://rstudio.com/products/rstudio/">Télécharger et installer la version open-source de RStudio Desktop</a></li>
+<li><a href="https://cran.r-project.org/mirrors.html">Téléchargez et installez R</a></li>
+<li><a href="https://rstudio.com/products/rstudio/">Téléchargez et installez la version open-source de RStudio Desktop</a></li>
 </ol>
-<p><em>NB : Dans la suite du tutoriel, nous programmerons dans les cellules de code de l'interface Jupyter. L'équivalent dans RStudio est ce qu'on appelle la console (en Anglais "console" ou "CLI" pour command-line interface). Tout ce qui aura été écrit dans les cellules qui suivent pourront donc être copiées-collées dans la console de RStudio, les résultats retournés par l'ordinateur s'affichant à la ligne.</em></p>
+<p>Dans la suite de ce cours, tout le code que vous lirez aura été écrit dans les "cellules de code" de l'interface Jupyter, qui sont reconnaissables par leur encadrement et leur fond grisé. L'équivalent dans RStudio est ce qu'on appelle la <strong>console</strong> (en Anglais "console" ou "CLI" pour command-line interface). Tout ce qui sera écrit dans les cellules qui suivent peut donc être copié-collé dans la console de RStudio, les résultats retournés par l'ordinateur s'affichant à la ligne.</p>
+<p>INCLURE CAPTURE D'ECRAN RSTUDIO</p>
 
 </div>
 </div>
@@ -557,7 +557,7 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Premier(s)-programme(s)"><strong>3. Premier(s) programme(s)</strong><a class="anchor-link" href="#3.-Premier(s)-programme(s)"> </a></h2><p>Traditionnellement, quel que soit le langage de programmation, on commence par apprendre à afficher le message "Hello, World!". Pour R c'est très facile, il suffit de taper dans la cellule vide ci-après la commande suivante : <code>print("Hello, World!")</code> et valider soit en appuyant sur <code>Maj</code> + <code>Entrée</code>, soit en cliquant sur le bouton ▶ dans la barre de navigation de Jupyter.</p>
+<h2 id="3.-Premier(s)-programme(s)"><strong>3. Premier(s) programme(s)</strong><a class="anchor-link" href="#3.-Premier(s)-programme(s)"> </a></h2><p>Traditionnellement, et ce quel que soit le langage de programmation, on commence par apprendre à afficher le message "Hello, World!" dans la console. Avec R c'est facile, il suffit de taper la commande suivante : <code>print("Hello, World!")</code> et valider soit en appuyant sur la touche <code>Entrée</code> de votre clavier.</p>
 
 </div>
 </div>
@@ -571,19 +571,28 @@ initFunction(initPrint)
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1"># Mettre un symbole &quot;#&quot; en début d&#39;une ligne de code permet d&#39;écrire des commentaires</span>
-<span class="c1"># sans qu&#39;ils ne soient pris en compte lors de l&#39;exécution. On appelle cela &quot;commenter&quot; du code.</span>
-<span class="c1"># La commande qui figure en dernière ligne de cette cellule permet d&#39;afficher la solution à la</span>
-<span class="c1"># question posée, précédée du symbole &quot;&gt;&quot;, ainsi que le résultat de la commande à la ligne suivante.</span>
-<span class="c1"># Essayez de &quot;décommenter&quot; cette commande en retirant le symbole &quot;#&quot; et en validant la cellule :</span>
-
-<span class="c1"># source(&quot;solutions/01_intro_helloworld_1.R&quot;, echo=TRUE)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;Hello, World!&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -591,12 +600,7 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Si tout s'est bien passé, il devrait s'être affiché le message suivant en-dessous de la cellule :</p>
-
-<pre><code>[1] "Hello, World!"
-
-</code></pre>
-<p>La fonction <code>print()</code> permet d'afficher sur la console la valeur de l'objet compris entre parenthèses. Dans notre cas, nous avions directement mis le message dans la fonction et R nous l'a donc affiché. Le <code>[1]</code> qui précède indique le numéro de l'élément affiché. En effet, R fonctionne en <strong>vecteurs</strong>, qui sont des groupes d'objets ; dans notre cas nous ne voulions qu'afficher un objet unique, mais R le considère comme un vecteur d'objets de longueur égale à 1.</p>
+<p>La fonction <code>print()</code> permet d'afficher sur la console la valeur de l'objet compris entre parenthèses. Dans notre cas, nous avions directement mis le message "Hello, World!" dans la fonction et R nous l'a donc affiché. Le <code>[1]</code> qui précède indique l'indice de position de l'élément affiché ; en effet, R fonctionne en <strong>vecteurs</strong>, qui sont des sortes de groupes d'objets que nous verrons plus en détail par la suite. Dans notre cas nous ne voulions afficher qu'un seul objet, mais R le considère en réalité comme un vecteur d'objets de longueur égale à 1.</p>
 
 </div>
 </div>
@@ -607,17 +611,16 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Exercice</strong></p>
-<p>On aurait pu obtenir le même résultat de la manière suivante :</p>
+<p>Afin de se familiariser avec un autre concept fondamental de R, on va réécrire notre programme d'une autre manière mais toujours dans le but d'afficher le même résultat à la console. Les étapes de cette variante sont dans l'ordre :</p>
 <ol>
-<li>Assigner le message à un "contenant" (qu'on appelle un <strong>objet</strong> ou une <strong>variable</strong> dans R)</li>
-<li>Afficher la valeur de l'objet à l'aide de la commande <code>print()</code></li>
+<li>Stocker le message dans un <strong>"contenant"</strong> (qu'on appelle un <strong>objet</strong> ou une <strong>variable</strong> dans R)</li>
+<li>Afficher le contenu de cette variable à l'aide de la commande <code>print()</code></li>
 </ol>
-<p>Comment feriez vous en R ? À vous de jouer dans la cellule ci-après, à l'aide de ces précisions :</p>
+<p>Avant cela, trois remarques pour nous aider :</p>
 <ul>
-<li>Dans R, pour assigner une valeur à un objet, on utilise l'opérateur <code>&lt;-</code>, avec le nom de l'objet du côté de la pointe de la flèche et sa valeur de l'autre côté (ex : <code>x &lt;- 34</code> ou encore <code>foo &lt;- "bar"</code>)</li>
-<li>Une chaîne de caractères (mot, phrase) est toujours entourée de guillemets (<code>'simples'</code>ou <code>"doubles"</code>). Lorsque R voit un mot ou une lettre sans guillemets, il l'interprête comme le nom d'un objet à aller chercher.</li>
-<li>Entre chaque commande, il faut aller à la ligne</li>
+<li>Dans R, pour <strong>assigner</strong> une valeur à une variable, on utilise l'opérateur <code>&lt;-</code>, avec le <strong>nom</strong> de l'objet du côté de la pointe de la flèche, et sa valeur de l'autre côté (ex : <code>x &lt;- 34</code> ou encore <code>foo &lt;- "bar"</code>).</li>
+<li>Une <strong>chaîne de caractères</strong> (mot, phrase) doit toujours entourée de <strong>guillemets</strong> (<code>'simples'</code>ou <code>"doubles"</code>) pour être considérée comme telle. Lorsque R voit un mot ou une lettre sans guillemets, il l'interprête comme le nom d'une variable à aller chercher dans son répertoire.</li>
+<li>Entre chaque commande, il faut aller à la ligne.</li>
 </ul>
 
 </div>
@@ -632,11 +635,26 @@ initFunction(initPrint)
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1"># Pour la solution, décommentez la ligne suivante (retirez le &quot;#&quot;) :</span>
-<span class="c1"># source(&quot;solutions/01_intro_helloworld_2.R&quot;, echo=TRUE)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">salutations</span> <span class="o">&lt;-</span> <span class="s">&quot;Hello, World!&quot;</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">salutations</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;Hello, World!&#34;
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -647,9 +665,53 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Bravo, vous avez écrit vos premiers programmes !</p>
-<p><a href="00_master.ipynb">Retour au sommaire</a> <br>
-Cours suivant : <a href="02_types.ipynb">Types d'objets et de données</a></p>
+<p>Avant de l'afficher à l'écran, on a donc d'abord assigné la chaîne de caractères <code>"Hello, World!"</code> à la variable <code>salutations</code>. En coulisses, R a stocké le message dans un espace de la mémoire de l'ordinateur, et l'a appelé <code>salutations</code> pour pouvoir le retrouver plus facilement par la suite.</p>
+<p>Si cet espace avait <strong>déjà été occupé</strong> par un autre objet, R l'aurait supprimé et <strong>remplacé</strong> par notre message sans nous prévenir ; il est de bon ton de vérifier que l'on a pas déjà stocké de donnée importante dans la même variable auparavant :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">salutations</span> <span class="o">&lt;-</span> <span class="s">&quot;Hello, World!&quot;</span>
+<span class="n">salutations</span> <span class="o">&lt;-</span> <span class="s">&quot;Good bye, World!&quot;</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">salutations</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;Good bye, World!&#34;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sur ce, bravo, vous avez écrit vos premiers programmes ! Enfin j'espère que vous avez fait l'effort de réécrire les commandes dans la console de votre IDE, car c'est en pratiquant que l'on apprend :)</p>
 
 </div>
 </div>
