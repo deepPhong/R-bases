@@ -4,9 +4,9 @@
 
 $serif: 'Lora', 'Helvetica Neue', 'Arial', serif !default;
 $sans-serif: -apple-system, BlinkMacSystemFont, 'Raleway', 'Helvetica Neue', 'Arial', sans-serif !default;
-$monospace: Monaco, Consolas, "Lucida Console", monospace !default;
+$monospace: 'Ubuntu Mono', 'Menlo', monospace !default;
 
-$global-font-family: $sans-serif !default;
+$global-font-family: $serif !default;
 $header-font-family: $sans-serif !default;
 $caption-font-family: $serif !default;
 
