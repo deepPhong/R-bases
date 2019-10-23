@@ -35,7 +35,7 @@ jobs:
           path: _site/
           destination: html
 
-  # Deploy the built site to jupyter-book.github.io
+  # Deploy the built site to deepphong.github.io
   deploy:
     docker:
       - image: circleci/python:3.7-stretch
@@ -54,6 +54,8 @@ jobs:
       - run:
           name: Deploying site using ghp-import
           command: |
+            mkdir ./_site/.circleci
+            cp .circleci/config.yml _site/.circleci/
             pip install ghp-import
             ghp-import -p -f -n ./_site/
 
