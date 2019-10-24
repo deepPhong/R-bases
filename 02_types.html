@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://deepphong.github.io/R-bases/02_types.html",
   "headline": "Types d&#39;objets et de données",
-  "datePublished": "2019-10-24T16:42:02+00:00",
-  "dateModified": "2019-10-24T16:42:02+00:00",
+  "datePublished": "2019-10-24T22:04:17+00:00",
+  "dateModified": "2019-10-24T22:04:17+00:00",
   "description": "        Chapitre 2 : Objets, classes et types 1. Objets Comme on a pu le voir précédemment, on utilise ce qu'on appelle des variables pour stocker diverses i...",
   "author": {
     "@type": "Person",
@@ -494,23 +494,26 @@ initFunction(initPrint)
 <h2 id="2.-Classes"><strong>2. Classes</strong><a class="anchor-link" href="#2.-Classes"> </a></h2><p>Si on revient à la première partie de la citation de <em>John Chambers</em>, <strong>tout ce qui existe</strong> dans R est un objet. Mais si tout est objet, en pratique on a besoin de <strong>classes</strong> afin de définir des catégories d'objet avec des attributs et des méthodes qui leurs sont propres. Si on fait un parallèle avec notre réalité physique, une voiture et un T-shirt sont tous deux des objets, mais l'un est un véhicule et l'autre un vêtement.</p>
 <p>Il existe une multitude de classes, et celles que l'on sera amené à manipuler le plus souvent dans le cadre de l'analyse de données sont :</p>
 <ul>
-<li>Les <strong>vecteurs</strong> (<code>Vector</code>)</li>
-<li>Les <strong>listes</strong> (<code>List</code>)</li>
+<li>Les <strong>vecteurs</strong> (<code>Vector</code>)<ul>
+<li>Les vecteurs atomiques</li>
+<li>Les listes</li>
+</ul>
+</li>
 <li>Les <strong>matrices</strong> (<code>Matrix</code>)</li>
 <li>Les <strong>data frames</strong> (<code>Data Frame</code>)</li>
 </ul>
 <p>On dit qu'un objet est une <strong>instance</strong> d'un certaine classe ; ainsi, si j'ai créé un vecteur (on va revenir sur ce que c'est plus bas), techniquement on devrait dire que j'ai <em>instancié</em> un objet de la classe <code>Vector</code>, mais c'est un peu lourd alors dans les pages qui suivent, je vais librement utiliser la formulation simplifiée.</p>
-<h2 id="3.-Types"><strong>3. Types</strong><a class="anchor-link" href="#3.-Types"> </a></h2><p>Un objet peut donc contenir des données (il peut aussi être vide), ces dernières étant stockées de différentes manières dans la mémoire de l'ordinateur selon leur nature (chiffres, lettres, etc.). Ces procédés de stockage différents déterminent ce qu'on appelle des <strong>types</strong>, dont les plus utiles pour nous sont ceux qui constituent la catégorie des <em>vector types</em> :</p>
+<h2 id="3.-Types"><strong>3. Types</strong><a class="anchor-link" href="#3.-Types"> </a></h2><p>Un objet peut donc contenir des données (il peut aussi être vide), ces dernières étant stockées de différentes manières dans la mémoire de l'ordinateur selon leur nature (chiffres, lettres, etc.). Ces procédés de stockage différents déterminent ce qu'on appelle des <strong>types</strong>, dont les plus utiles pour nous sont ceux qui constituent la catégorie des <em>vector types</em> primaires :</p>
 <ul>
-<li><strong>Integer</strong> : les entiers naturels (ex : <code>23L</code>, <code>5L</code>, <code>0L</code>)</li>
-<li><strong>Double</strong> : les nombres réels : (<code>23.0</code>, <code>12.5</code>, <code>0.2334</code>)</li>
-<li><strong>Character</strong> : le texte, toujours entre guillemets (ex : <code>"Hello"</code>, <code>"TRUE"</code>, <code>"123"</code>, <code>"3 quarts"</code>)</li>
-<li><strong>Logical</strong> : les booléens, variables à deux états, notés par convention <em>vrai</em>/<em>faux</em> (ex : <code>TRUE</code>, <code>FALSE</code>)</li>
-<li><strong>Complex</strong> : les nombres complexes (ex : <code>33 + 3i</code>)</li>
-<li><strong>Raw</strong> : le stockage au format binaire et/ou hexadécimal</li>
+<li><strong>Integer</strong> : les entiers naturels</li>
+<li><strong>Double</strong> : les nombres réels</li>
+<li><strong>Character</strong> : le texte</li>
+<li><strong>Logical</strong> : les booléens</li>
+<li>Complex : les nombres complexes</li>
+<li>Raw : le stockage au format binaire et/ou hexadécimal</li>
 </ul>
 <p>Si vous vous rappelez ce qu'on a dit au précédemment, pour R un chiffre isolé n'est pas un chiffre, mais un vecteur-chiffre de longueur 1. C'est la raison pour laquelle on parle de <em>vector types</em> pour décrire le type des données.</p>
-<p>Certaines classes d'objets ont comme propriété de ne pouvoir stocker que des données du <strong>même type</strong>, comme les vecteurs et les matrices, alors que d'autres permettent de stocker des données de plusieurs <strong>types différents</strong>. Avant de rentrer dans le détail de certaines d'entre elles dans les prochains chapitres, si on reprend les quatre classes que l'on a cité plus haut, on pourrait résumer ça comme ça :</p>
+<p>Certaines classes d'objets ont comme propriété de ne pouvoir stocker que des données du <strong>même type</strong>, comme les vecteurs atomiques, alors que d'autres permettent de stocker des données de plusieurs <strong>types différents</strong>. Avant de rentrer dans le détail de certaines d'entre elles dans les prochains chapitres, si on reprend les quatre classes que l'on a cité plus haut, on pourrait résumer ça comme ça :</p>
 <table>
 <thead><tr>
 <th style="text-align:left">Cardinalité</th>
@@ -521,13 +524,13 @@ initFunction(initPrint)
 <tbody>
 <tr>
 <td style="text-align:left"><b>Une dimension</b></td>
-<td style="text-align:left"><u>Vector</u> <br> <img src="./images/02_vector.png" alt="vector"></td>
-<td style="text-align:left"><u>List</u> <br> <img src="./images/02_list.png" alt="list"></td>
+<td style="text-align:left"><u>vecteur atomique</u> <br> <img src="./images/02_vector.png" alt="vector"></td>
+<td style="text-align:left"><u>liste</u> <br> <img src="./images/02_list.png" alt="list"></td>
 </tr>
 <tr>
 <td style="text-align:left"><b>Deux dimensions</b></td>
-<td style="text-align:left"><u>Matrix</u> <br> <img src="./images/02_matrix.png" alt="vector"></td>
-<td style="text-align:left"><u>Data Frame</u> <br> <img src="./images/02_dataframe.png" alt="list"></td>
+<td style="text-align:left"><u>matrice</u> <br> <img src="./images/02_matrix.png" alt="vector"></td>
+<td style="text-align:left"><u>data frame</u> <br> <img src="./images/02_dataframe.png" alt="list"></td>
 </tr>
 </tbody>
 </table>

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Manipulations et opérations de vecteurs</title>
-  <meta name="description" content="        Chapitre 3 : Op&#233;rations et manipulations de vecteurs Dans cette section, nous nous intéresserons aux manipulations de vecteurs (dont les unités ...">
+  <meta name="description" content="        Chapitre 3 : Les vecteurs Les vecteurs constituent la classe d'objets la plus importante de R. On va voir par la suite qu'à partir de ces vecteurs, o...">
 
   <link rel="canonical" href="https://deepphong.github.io/R-bases/03_vectors.html">
   <link rel="alternate" type="application/rss+xml" title="R-bases" href="https://deepphong.github.io/R-bases/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:url"         content="https://deepphong.github.io/R-bases/03_vectors.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Manipulations et opérations de vecteurs" />
-<meta property="og:description" content="        Chapitre 3 : Op&#233;rations et manipulations de vecteurs Dans cette section, nous nous intéresserons aux manipulations de vecteurs (dont les unités ..." />
+<meta property="og:description" content="        Chapitre 3 : Les vecteurs Les vecteurs constituent la classe d'objets la plus importante de R. On va voir par la suite qu'à partir de ces vecteurs, o..." />
 <meta property="og:image"       content="" />
 
 <meta name="twitter:card" content="summary">
@@ -26,9 +26,9 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://deepphong.github.io/R-bases/03_vectors.html",
   "headline": "Manipulations et opérations de vecteurs",
-  "datePublished": "2019-10-24T16:42:02+00:00",
-  "dateModified": "2019-10-24T16:42:02+00:00",
-  "description": "        Chapitre 3 : Op&#233;rations et manipulations de vecteurs Dans cette section, nous nous intéresserons aux manipulations de vecteurs (dont les unités ...",
+  "datePublished": "2019-10-24T22:04:17+00:00",
+  "dateModified": "2019-10-24T22:04:17+00:00",
+  "description": "        Chapitre 3 : Les vecteurs Les vecteurs constituent la classe d'objets la plus importante de R. On va voir par la suite qu'à partir de ces vecteurs, o...",
   "author": {
     "@type": "Person",
     "name": "NGUYEN Dinh-Phong"
@@ -478,8 +478,176 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Chapitre-3-:-Op&#233;rations-et-manipulations-de-vecteurs"><strong>Chapitre 3 : Op&#233;rations et manipulations de vecteurs</strong><a class="anchor-link" href="#Chapitre-3-:-Op&#233;rations-et-manipulations-de-vecteurs"> </a></h1><p>Dans cette section, nous nous intéresserons aux manipulations de vecteurs (dont les unités de données isolées, car comme nous l'avons vu précédemment, R considère un chiffre (par exemple) comme un vecteur de longueur égale à 1).</p>
-<h2 id="1.-Op&#233;rations-num&#233;riques"><strong>1. Op&#233;rations num&#233;riques</strong><a class="anchor-link" href="#1.-Op&#233;rations-num&#233;riques"> </a></h2>
+<h1 id="Chapitre-3-:-Les-vecteurs"><strong>Chapitre 3 : Les vecteurs</strong><a class="anchor-link" href="#Chapitre-3-:-Les-vecteurs"> </a></h1><p>Les vecteurs constituent la classe d'objets la plus importante de R. On va voir par la suite qu'à partir de ces vecteurs, on va pouvoir construire tous les autres objets qui nous intéressent. Vous vous rappelez peut-être qu'au chapitre précédent, on a divisé les vecteurs en deux sous-classes, les <strong>vecteurs atomiques</strong> et les <strong>listes</strong>. Les premiers ne peuvent contenir que des éléments du même type, au contraire des derniers.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_epigraph">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>NB : Vous verrez très souvent une simplification de langage consistant à appeler les <em>vecteurs atomiques</em> des <em>vecteurs</em> tout court. Je vais me permettre de faire la même chose par la suite pour alléger les formulations et parce que c'est ce que vous trouverez sur les forums d'entraide en ligne, mais retenez qu'une liste est également un vecteur.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-Les-vecteurs-atomiques"><strong>1. Les vecteurs atomiques</strong><a class="anchor-link" href="#1.-Les-vecteurs-atomiques"> </a></h2><p>On a vu dans le chapitre précédent qu'ils pouvaient être principalement de quatre types primaires différents (je ne mentionnerai plus par la suite les types <em>Complex</em> et <em>Raw</em> car ils ne sont que très rarement utilisés) :</p>
+<ul>
+<li><strong>Integer</strong> : les entiers naturels, par convention suivis de la lettre "L" (ex : <code>23L</code>, <code>5L</code>, <code>0L</code>)</li>
+<li><strong>Double</strong> : les nombres réels (ex : <code>23.0</code>, <code>12.5</code>, <code>0.2334</code>) et trois valeurs spéciales que sont <code>Inf</code>, <code>-Inf</code> et <code>NaN</code> (<em>Not a Number</em>)</li>
+<li><strong>Character</strong> : le texte, par convention entre guillemets (ex : <code>"Hello"</code>, <code>"TRUE"</code>, <code>"123"</code>, <code>"3 quarts"</code>)</li>
+<li><strong>Logical</strong> : les booléens, variables à deux états, notés par convention <em>vrai</em>/<em>faux</em> (ex : <code>TRUE</code>, <code>FALSE</code>)</li>
+</ul>
+<p>Quelques remarques en vrac :</p>
+<ul>
+<li>Sans le "L", les entiers naturels sont interprétés comme des <em>double</em></li>
+<li>Les booléens <code>TRUE</code> et <code>FALSE</code> peuvent aussi être abrégés <code>T</code> et <code>F</code></li>
+</ul>
+<h3 id="1.1-Instanciation"><strong>1.1 Instanciation</strong><a class="anchor-link" href="#1.1-Instanciation"> </a></h3><p>Pour créer un vecteur atomique, on utilise la fonction <code>c()</code> ("c" pour <em>combine</em>) :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">int_vect</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">2L</span><span class="p">,</span> <span class="m">35L</span><span class="p">,</span> <span class="m">0L</span><span class="p">)</span>
+<span class="n">dbl_vect</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1.23</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">0.345</span><span class="p">)</span>
+<span class="n">chr_vect</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;pbr&quot;</span><span class="p">,</span> <span class="s">&quot;bct&quot;</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="n">lgl_vect</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On peut également combiner plusieurs vecteurs en un avec la même fonction :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">lng_vect</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">lng_vect</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] 1 2 3 4 5 6
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Lorsqu'on combine des éléments de types différents, R va convertir tous les éléments vers le type le plus "inclusif" :</p>
+<ul>
+<li>Les booléns peuvent être convertis en <em>Integer</em>, <code>TRUE</code> valant <code>1</code> et <code>FALSE</code> valant <code>0</code></li>
+<li>Les <em>Integer</em> peuvent être convertis en <em>Double</em></li>
+<li>Les <em>Double</em> peuvent être convertis en texte </li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">mix_vect</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="kc">TRUE</span><span class="p">,</span> <span class="m">43L</span><span class="p">,</span> <span class="m">34.5343</span><span class="p">,</span> <span class="s">&quot;trois&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">mix_vect</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] &#34;TRUE&#34;    &#34;43&#34;      &#34;34.5343&#34; &#34;trois&#34;  
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Selon les règles énoncées plus haut, tous les éléments du vecteur ont donc été convertis au format texte.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="1.2-Op&#233;rations-num&#233;riques"><strong>1.2 Op&#233;rations num&#233;riques</strong><a class="anchor-link" href="#1.2-Op&#233;rations-num&#233;riques"> </a></h3>
 </div>
 </div>
 </div>
