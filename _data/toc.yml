@@ -47,14 +47,14 @@
   url: /01_intro
   not_numbered: true
 
-- title: Types d'objets et de données
+- title: Objets, classes et types
   url: /02_types
   not_numbered: true
 
-- title: Manipulations et opérations de vecteurs
+- title: Les vecteurs
   url: /03_vectors
   not_numbered: true
 
-- title: Manipulations et transformation de Data Frames
+- title: Les data frames
   url: /04_data-frames
   not_numbered: true
