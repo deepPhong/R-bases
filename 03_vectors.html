@@ -26,8 +26,8 @@
   "@type": "NewsArticle",
   "mainEntityOfPage": "https://deepphong.github.io/R-bases/03_vectors.html",
   "headline": "Manipulations et opérations de vecteurs",
-  "datePublished": "2019-10-24T22:08:11+00:00",
-  "dateModified": "2019-10-24T22:08:11+00:00",
+  "datePublished": "2019-10-25T16:23:13+00:00",
+  "dateModified": "2019-10-25T16:23:13+00:00",
   "description": "        Chapitre 3 : Les vecteurs Les vecteurs constituent la classe d'objets la plus importante de R. On va voir par la suite qu'à partir de ces vecteurs, o...",
   "author": {
     "@type": "Person",
@@ -511,6 +511,7 @@ initFunction(initPrint)
 <ul>
 <li>Sans le "L", les entiers naturels sont interprétés comme des <em>double</em></li>
 <li>Les booléens <code>TRUE</code> et <code>FALSE</code> peuvent aussi être abrégés <code>T</code> et <code>F</code></li>
+<li>Les <em>integer</em> et les <em>double</em> peuvent être regroupés dans un "surtype", qu'on appelle <em>numeric</em></li>
 </ul>
 <h3 id="1.1-Instanciation"><strong>1.1 Instanciation</strong><a class="anchor-link" href="#1.1-Instanciation"> </a></h3><p>Pour créer un vecteur atomique, on utilise la fonction <code>c()</code> ("c" pour <em>combine</em>) :</p>
 
@@ -589,9 +590,10 @@ initFunction(initPrint)
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Lorsqu'on combine des éléments de types différents, R va convertir tous les éléments vers le type le plus "inclusif" :</p>
 <ul>
-<li>Les booléns peuvent être convertis en <em>Integer</em>, <code>TRUE</code> valant <code>1</code> et <code>FALSE</code> valant <code>0</code></li>
-<li>Les <em>Integer</em> peuvent être convertis en <em>Double</em></li>
-<li>Les <em>Double</em> peuvent être convertis en texte </li>
+<li>Les booléns peuvent être convertis en <em>integer</em>, <code>TRUE</code> valant <code>1</code> et <code>FALSE</code> valant <code>0</code>, en <em>double</em> ou en <em>character</em></li>
+<li>Les <em>integer</em> peuvent être convertis en <em>double</em> ou en <em>chracter</em></li>
+<li>Les <em>double</em> peuvent être convertis en <em>character</em> </li>
+<li>Les <em>character</em> ne sont jamais convertis</li>
 </ul>
 
 </div>
@@ -647,7 +649,8 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1.2-Op&#233;rations-num&#233;riques"><strong>1.2 Op&#233;rations num&#233;riques</strong><a class="anchor-link" href="#1.2-Op&#233;rations-num&#233;riques"> </a></h3>
+<h3 id="1.2-Op&#233;rations-num&#233;riques"><strong>1.2 Op&#233;rations num&#233;riques</strong><a class="anchor-link" href="#1.2-Op&#233;rations-num&#233;riques"> </a></h3><p>Rien de bien compliqué ici, vous pouvez interagir dans la console comme avec une calculatrice :</p>
+
 </div>
 </div>
 </div>
@@ -660,7 +663,8 @@ initFunction(initPrint)
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="m">1</span> <span class="o">+</span> <span class="m">2</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">somme_chiffres</span> <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">+</span> <span class="m">2</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">somme_chiffres</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -687,12 +691,23 @@ initFunction(initPrint)
 
 <div class="jb_cell">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Les opérations entre vecteurs se font position par position (le premier élément d'un vecteur avec le premier élément d'un autre, etc.) :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">somme_vecteurs</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span> <span class="o">-</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">somme_vecteurs</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span> <span class="o">+</span> <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">somme_vecteurs</span><span class="p">)</span>
 </pre></div>
 
@@ -707,75 +722,7 @@ initFunction(initPrint)
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[1] -3 -3 -3
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="m">9</span> <span class="o">%%</span> <span class="m">5</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[1] 4
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">combinaison_vecteurs</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span>
-    <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span>
-    <span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">combinaison_vecteurs</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[1] 1 2 3 4 5 6
+<pre>[1] 5 7 9
 </pre>
 </div>
 </div>
@@ -790,7 +737,189 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Op&#233;rations-logiques"><strong>2. Op&#233;rations logiques</strong><a class="anchor-link" href="#2.-Op&#233;rations-logiques"> </a></h2>
+<p>Une opération un peu spéciale ici, qu'on appelle <em>modulo</em>, et qui renvoie le reste de la division euclidienne :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># 13 divisé par 5 = 2 (reste 3)</span>
+<span class="nf">print</span><span class="p">(</span><span class="m">13</span> <span class="o">%%</span> <span class="m">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] 3
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Selon les mêmes règles que la conversion automatique des éléments d'un vecteur pour qu'ils aient le même type, R essaie quand c'est possible de convertir les éléments d'une opération en <em>double</em> pour qu'elle soit réalisable :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">somme_bizarre</span> <span class="o">&lt;-</span> <span class="m">56</span> <span class="o">+</span> <span class="kc">TRUE</span>
+<span class="n">verite</span> <span class="o">&lt;-</span> <span class="kc">TRUE</span> <span class="o">+</span> <span class="kc">TRUE</span> <span class="o">+</span> <span class="kc">TRUE</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">somme_bizarre</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">verite</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] 57
+[1] 3
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Toujours pas de conversion automatique du texte :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">somme_erreur</span> <span class="o">&lt;-</span> <span class="m">41</span> <span class="o">+</span> <span class="s">&quot;1&quot;</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">somme_erreur</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+Error in 41 + &#34;1&#34;: non-numeric argument to binary operator
+Traceback:
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Mais c'est possible de le faire manuellement avec les fonctions <code>as.integer()</code> ou <code>as.double()</code> par exemple :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">somme_qui_marche</span> <span class="o">&lt;-</span> <span class="m">41</span> <span class="o">+</span> <span class="nf">as.double</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">somme_qui_marche</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] 42
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="1.2-Op&#233;rations-logiques"><strong>1.2 Op&#233;rations logiques</strong><a class="anchor-link" href="#1.2-Op&#233;rations-logiques"> </a></h3>
 </div>
 </div>
 </div>
@@ -813,20 +942,20 @@ initFunction(initPrint)
 <tr>
 <td>Logique</td>
 <td style="text-align:center"><code>&amp;</code></td>
-<td>AND</td>
-<td>Affiche <code>TRUE</code> si les expressions de part et d'autre de l'opérateur sont toutes deux vraies</td>
+<td>AND (= ET)</td>
+<td>Affiche <code>TRUE</code> si les conditions de part et d'autre de l'opérateur sont toutes deux vérifiées</td>
 </tr>
 <tr>
 <td>Logique</td>
 <td style="text-align:center"><code>|</code></td>
-<td>OR</td>
-<td>Affiche <code>TRUE</code> si au moins l'une des expressions de part et d'autre de l'opérateur est vraie</td>
+<td>OR (= OU)</td>
+<td>Affiche <code>TRUE</code> si au moins l'une des conditions de part et d'autre de l'opérateur est vérifiée</td>
 </tr>
 <tr>
 <td>Logique</td>
 <td style="text-align:center"><code>!</code></td>
 <td>NOT</td>
-<td>Affiche l'inverse de l'expression évaluée</td>
+<td>Précède une opération logique et affiche l'inverse du résultat de celle-ci</td>
 </tr>
 <tr>
 <td>Relationnel</td>
@@ -907,6 +1036,17 @@ initFunction(initPrint)
 </div>
 </div>
 
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Attention à ne pas confondre l'opérateur <code>==</code> (double signe <em>égal</em>), qui vérifie une égalité entre deux éléments, et l'opérateur <code>=</code> (signe <em>égal</em>) qui fait à très peu de chose près la même chose que <code>&lt;-</code> (assignation).</p>
+
+</div>
+</div>
 </div>
 </div>
 
@@ -999,7 +1139,7 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Lors que les opérateurs sont utilisés avec des vecteurs, les évaluations se font deux à deux selon la position dans le vecteur : le premier élément du vecteur 1 est comparé au premier élément du vecteur 2, et ainsi de suite.</p>
+<p>Lors que les opérateurs sont utilisés avec des vecteurs, les évaluations se font encore une fois deux à deux selon la position dans le vecteur :</p>
 
 </div>
 </div>
@@ -1044,7 +1184,7 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>On peut également utiliser les opérateurs relationnels avec le chaînes de caractères ! Pour les opérateurs <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> et <code>&gt;=</code>, seule la première lettre est évaluée (la notion d'infériorité ou de supériorité se définit selon la position dans l'alphabet).</p>
+<p>On peut aussi utiliser les opérateurs relationnels avec du texte, même si c'est très peu fait en pratique. Pour les opérateurs <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code> et <code>&gt;=</code>, seule la première lettre est évaluée (la notion d'infériorité ou de supériorité se définit selon la position dans l'alphabet).</p>
 
 </div>
 </div>
@@ -1091,7 +1231,8 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Ordonner-un-vecteur"><strong>3. Ordonner un vecteur</strong><a class="anchor-link" href="#3.-Ordonner-un-vecteur"> </a></h2>
+<h3 id="1.3-Ordonner-un-vecteur"><strong>1.3 Ordonner un vecteur</strong><a class="anchor-link" href="#1.3-Ordonner-un-vecteur"> </a></h3><p>Pour cela on va utiliser la fonction <code>sort()</code> et l'argument <code>decreasing</code> (on verra plus tard plus en détail ce qu'est une fonction et ses arguments) :</p>
+
 </div>
 </div>
 </div>
@@ -1104,9 +1245,11 @@ initFunction(initPrint)
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">bazar</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">129</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
-<span class="n">ordre_croissant</span> <span class="o">&lt;-</span> <span class="nf">sort</span><span class="p">(</span><span class="n">bazar</span><span class="p">,</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-<span class="n">ordre_decroissant</span> <span class="o">&lt;-</span> <span class="nf">sort</span><span class="p">(</span><span class="n">bazar</span><span class="p">,</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">vecteur_desordonne</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">129</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+
+<span class="n">ordre_croissant</span> <span class="o">&lt;-</span> <span class="nf">sort</span><span class="p">(</span><span class="n">vecteur_desordonne</span><span class="p">,</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">ordre_decroissant</span> <span class="o">&lt;-</span> <span class="nf">sort</span><span class="p">(</span><span class="n">vecteur_desordonne</span><span class="p">,</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+
 <span class="nf">print</span><span class="p">(</span><span class="n">ordre_croissant</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">ordre_decroissant</span><span class="p">)</span>
 </pre></div>
@@ -1138,7 +1281,67 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Acc&#233;der-aux-&#233;l&#233;ments-d'un-vecteur"><strong>4. Acc&#233;der aux &#233;l&#233;ments d'un vecteur</strong><a class="anchor-link" href="#4.-Acc&#233;der-aux-&#233;l&#233;ments-d'un-vecteur"> </a></h2><p>Afin d'accéder aux éléments d'un vecteur, on utilise les crochets <code>[]</code> à la suite du vecteur, avec l'indice de position de l'élément en question entre les crochets :</p>
+<h2 id="2.-Les-listes"><strong>2. Les listes</strong><a class="anchor-link" href="#2.-Les-listes"> </a></h2><p>On ne va pas beaucoup s'attarder sur les listes simples dans cette partie, pour la bonne raison qu'une liste est la même chose qu'un vecteur atomique, sauf qu'elle peut accueillir des éléments de types différents en son sein :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">hopital</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="s">&quot;Ambroise Paré&quot;</span><span class="p">,</span> <span class="m">92</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">hopital</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[1]]
+[1] &#34;Ambroise Paré&#34;
+
+[[2]]
+[1] 92
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Je passe rapidement dessus, mais l'un des objets les plus importants de R, celui qui nous permet de traiter les données que l'on rencontre au quotidien (le <strong>data frame</strong>), est en réalité bien une liste. Et on aura le temps d'y revenir dans un chapitre ultérieur qui y sera entièrement dédié !</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Acc&#233;der-aux-&#233;l&#233;ments-d'un-vecteur"><strong>3. Acc&#233;der aux &#233;l&#233;ments d'un vecteur</strong><a class="anchor-link" href="#3.-Acc&#233;der-aux-&#233;l&#233;ments-d'un-vecteur"> </a></h2><h3 id="3.1-Indices"><strong>3.1 Indices</strong><a class="anchor-link" href="#3.1-Indices"> </a></h3><p>Afin d'accéder aux éléments d'un vecteur, on utilise des crochets <code>[]</code> directement à la suite du vecteur, avec l'indice de position de l'élément en question entre les crochets :</p>
 
 </div>
 </div>
@@ -1196,8 +1399,8 @@ initFunction(initPrint)
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">vecteur_lambda_ampute</span> <span class="o">&lt;-</span> <span class="n">vecteur_lambda[</span><span class="m">-4</span><span class="n">]</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">vecteur_lambda_ampute</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">lambda_ampute</span> <span class="o">&lt;-</span> <span class="n">vecteur_lambda[</span><span class="m">-4</span><span class="n">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">lambda_ampute</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1226,7 +1429,17 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Une autre méthode pour sélectionner les éléments d'un vecteur, qui peut s'avérer utile dans certaines situations, consiste à écrire entre les crochets un vecteur de booléens, de la même longueur que le vecteur d'intérêt :</p>
+<h3 id="3.2-Filtres-conditionnels"><strong>3.2 Filtres conditionnels</strong><a class="anchor-link" href="#3.2-Filtres-conditionnels"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Une autre méthode pour sélectionner les éléments d'un vecteur, consiste à écrire entre les crochets un vecteur de booléens, de la même longueur que le vecteur d'intérêt :</p>
 
 </div>
 </div>
@@ -1270,9 +1483,198 @@ initFunction(initPrint)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="00_master.ipynb">Retour au sommaire</a> <br>
-Cours précédent : <a href="02_types.ipynb">Types d'objets et de données</a> <br>
-Cours suivant : <a href="04_data-frames.ipynb">Manipulation et transformation de Data Frames</a></p>
+<p>Ça peut paraître rébarbatif au premier abord, mais c'est en réalité très utile pour accéder à des éléments qui remplissent une certaine <strong>condition</strong>, que l'on va préciser grâce aux opérations logiques que l'on a vu plus haut :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">enumeration</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+<span class="n">filtre</span> <span class="o">&lt;-</span> <span class="n">enumeration</span> <span class="o">&gt;=</span> <span class="m">5</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">filtre</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] FALSE FALSE  TRUE  TRUE FALSE
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>R a donc vérifié la condition, à savoir <code>enumeration &gt;= 5</code> sur chacun des éléments du vecteur <code>enumeration</code>, comme si on avait fait l'opération <code>enumeration &gt;= c(5, 5, 5, 5, 5)</code>. En effet, lorsqu'une opération s'effectue entre deux vecteurs de longueur différente, R prend le plus petit et le répète jusqu'à atteindre la longueur du vecteur le plus grand. Par exemple :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">filtre_diff</span> <span class="o">&lt;-</span> <span class="n">enumeration</span> <span class="o">&gt;=</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">filtre_diff</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in enumeration &gt;= c(2, 3):
+“longer object length is not a multiple of shorter object length”</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] FALSE FALSE  TRUE  TRUE  TRUE
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ici R a effectué l'opération <code>enumeration &gt;= c(2, 3, 2, 3, 2)</code>, et on est prévenu par un message que la longueur du vecteur le plus long n'est pas un multiple de la longueur du vecteur le plus court. Un dernier filtre pour la route pour illustrer au passage l'utilité du <em>modulo</em> (<code>%%</code>) :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Un nombre est pair si le reste de sa division </span>
+<span class="c1"># euclidienne par 2 est égal à zéro</span>
+<span class="n">filtre_pair</span> <span class="o">&lt;-</span> <span class="n">enumeration</span> <span class="o">%%</span> <span class="m">2</span> <span class="o">==</span> <span class="m">0</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">filtre_pair</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] FALSE  TRUE FALSE  TRUE FALSE
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Enfin on va pouvoir faire usage de nos filtres comme si on voulait sélectionner les éléments d'un vecteur avec des booléens :</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">enumeration[filtre]</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">enumeration[filtre_diff]</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">enumeration[filtre_pair]</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[1] 7 8
+[1] 7 8 3
+[1] 2 8
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Vous en savez maintenant suffisamment pour manipuler des vecteurs (vecteurs atomiques et listes). Et même si vous êtes en train de penser qu'on manipule beaucoup plus souvent des données tabulaires (ce qu'on verra au prochain chapitre), détrompez-vous, les <strong>data frames</strong> sont en fait des listes de vecteurs atomiques... Mais je ne vous embrouille pas plus, et passons au chapitre suivant !</p>
 
 </div>
 </div>
