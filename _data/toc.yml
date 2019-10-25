@@ -22,7 +22,7 @@
 # See the links below for an example.
 
 # Top-level page
-- title: Home
+- title: Accueil
   url: /home
   not_numbered: true
 
@@ -45,16 +45,13 @@
 # A chapter w/ a collection of sections beneath it
 - title: Introduction et premiers pas
   url: /01_intro
-  not_numbered: true
 
 - title: Objets, classes et types
   url: /02_types
-  not_numbered: true
 
 - title: Les vecteurs
   url: /03_vectors
-  not_numbered: true
 
-- title: Les data frames
-  url: /04_data-frames
-  not_numbered: true
+#- title: Les data frames
+#  url: /04_data-frames
+#  not_numbered: true
